@@ -69,14 +69,20 @@ set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME generator2_tb -section_id
 set_global_assignment -name VHDL_FILE Exp2_tb.vhd
 set_global_assignment -name EDA_TEST_BENCH_NAME Exp2_tb -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Exp2_tb
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id Exp2_tb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "10 s" -section_id Exp2_tb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Exp2_tb -section_id Exp2_tb
+set_global_assignment -name VHDL_FILE selector.vhd
+set_global_assignment -name VHDL_FILE clk50Mto1.vhd
+set_global_assignment -name VHDL_FILE clk50Mto1_tb.vhd
+set_global_assignment -name EDA_TEST_BENCH_NAME clk50Mto1_tb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id clk50Mto1_tb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id clk50Mto1_tb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME clk50Mto1_tb -section_id clk50Mto1_tb
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name EDA_TEST_BENCH_FILE generator1_tb.vhd -section_id generator1_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE generator2_tb.vhd -section_id generator2_tb
 set_global_assignment -name EDA_TEST_BENCH_FILE Exp2_tb.vhd -section_id Exp2_tb
-set_global_assignment -name VHDL_FILE selector.vhd
-set_global_assignment -name VHDL_FILE clk50Mto1.vhd
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name EDA_TEST_BENCH_FILE clk50Mto1_tb.vhd -section_id clk50Mto1_tb

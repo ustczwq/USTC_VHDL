@@ -12,12 +12,12 @@ end entity;
 
 architecture division of clk50Mto1 is
 	signal counter :integer range 0 to 999999;
-	signal tmp_clk :std_logic;
+	signal tmp_clk :std_logic := '0';
 begin
 	process
 	begin
 		wait until rising_edge(clk);
-		if reset = '0' then
+		if reset = '1' then
 			counter <= 0;
 			tmp_clk <= '0';
 		elsif counter = 999999 then
