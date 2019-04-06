@@ -5,7 +5,7 @@ entity detector is
 	port(
 		clk, reset :in std_logic;
 		din  :in std_logic;
-		dout :out std_logic
+		dout :out std_logic := '0'
 	);
 end detector;
 
