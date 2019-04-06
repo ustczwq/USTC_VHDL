@@ -18,14 +18,14 @@
 #
 # Quartus II 64-Bit
 # Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
-# Date created = 17:06:22  April 02, 2019
+# Date created = 11:05:47  April 06, 2019
 #
 # -------------------------------------------------------------------------- #
 #
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		Exp2_assignment_defaults.qdf
+#		Exp3_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -38,9 +38,9 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CEFA2F23C8
-set_global_assignment -name TOP_LEVEL_ENTITY Exp2
+set_global_assignment -name TOP_LEVEL_ENTITY Exp3
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
-set_global_assignment -name PROJECT_CREATION_TIME_DATE "17:06:22  APRIL 02, 2019"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:05:47  APRIL 06, 2019"
 set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
@@ -48,41 +48,27 @@ set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
-set_global_assignment -name VHDL_FILE Exp2.vhd
-set_global_assignment -name VHDL_FILE detector.vhd
-set_global_assignment -name VHDL_FILE generator1.vhd
-set_global_assignment -name VHDL_FILE generator1_tb.vhd
+set_global_assignment -name VHDL_FILE Exp3.vhd
+set_global_assignment -name VHDL_FILE reg.vhd
+set_global_assignment -name VHDL_FILE reg_tb.vhd
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH Exp2_tb -section_id eda_simulation
-set_global_assignment -name EDA_TEST_BENCH_NAME generator1_tb -section_id eda_simulation
-set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id generator1_tb
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id generator1_tb
-set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME generator1_tb -section_id generator1_tb
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH Exp3_tb -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME reg_tb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id reg_tb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id reg_tb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME reg_tb -section_id reg_tb
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
-set_global_assignment -name VHDL_FILE generator2.vhd
-set_global_assignment -name VHDL_FILE generator2_tb.vhd
-set_global_assignment -name EDA_TEST_BENCH_NAME generator2_tb -section_id eda_simulation
-set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id generator2_tb
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id generator2_tb
-set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME generator2_tb -section_id generator2_tb
-set_global_assignment -name VHDL_FILE Exp2_tb.vhd
-set_global_assignment -name EDA_TEST_BENCH_NAME Exp2_tb -section_id eda_simulation
-set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Exp2_tb
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "10 s" -section_id Exp2_tb
-set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Exp2_tb -section_id Exp2_tb
-set_global_assignment -name VHDL_FILE selector.vhd
-set_global_assignment -name VHDL_FILE clk50Mto1.vhd
-set_global_assignment -name VHDL_FILE clk50Mto1_tb.vhd
-set_global_assignment -name EDA_TEST_BENCH_NAME clk50Mto1_tb -section_id eda_simulation
-set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id clk50Mto1_tb
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id clk50Mto1_tb
-set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME clk50Mto1_tb -section_id clk50Mto1_tb
+set_global_assignment -name VHDL_FILE decoder38.vhd
+set_global_assignment -name VHDL_FILE decoder47.vhd
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name EDA_TEST_BENCH_FILE generator1_tb.vhd -section_id generator1_tb
-set_global_assignment -name EDA_TEST_BENCH_FILE generator2_tb.vhd -section_id generator2_tb
-set_global_assignment -name EDA_TEST_BENCH_FILE Exp2_tb.vhd -section_id Exp2_tb
-set_global_assignment -name EDA_TEST_BENCH_FILE clk50Mto1_tb.vhd -section_id clk50Mto1_tb
+set_global_assignment -name VHDL_FILE Exp3_tb.vhd
+set_global_assignment -name EDA_TEST_BENCH_NAME Exp3_tb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Exp3_tb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id Exp3_tb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Exp3_tb -section_id Exp3_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE Exp3_tb.vhd -section_id Exp3_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE reg_tb.vhd -section_id reg_tb
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
