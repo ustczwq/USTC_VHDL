@@ -11,7 +11,7 @@ end detector;
 
 architecture result of detector is
 	type State is (s0, s1, s2, s3, s4, s5, s6, s7, s8, s9);
-	signal current_state: State;
+	signal current_state: State := s0;
 	
 begin
 	process(clk, reset, din)

@@ -18,7 +18,7 @@ architecture behave of reg is
 	type data_reg is array (0 to 7) of data;
 	signal counter :integer range 0 to 7;
 	constant sreg :slct_reg := ("000",  "001",  "010",  "011",  "100",  "101",  "110",  "111");
-	signal dreg :data_reg := ("0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111");
+	signal   dreg :data_reg := ("0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111");
 	
 begin	
    process(clk, en, reset, s0, s1, s2, d0, d1, d2, d3)
@@ -45,7 +45,7 @@ begin
 				dreg(num)(3) <= d3;
 			end if;	
 			
-			--out put
+			--output
 			counter <= (counter + 1) rem 8;	
 			sout0 <= sreg(counter)(0);
 			sout1 <= sreg(counter)(1);

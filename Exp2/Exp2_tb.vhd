@@ -24,7 +24,7 @@ begin
       dout);
 		  
 	reset <= '0';
-	which <= '0';
+	which <= '1'; -- or 0
 	
 	process
 	begin

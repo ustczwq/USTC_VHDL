@@ -11,7 +11,7 @@ entity clk50Mto1 is
 end entity;
 
 architecture division of clk50Mto1 is
-	signal counter :integer range 0 to 4999999;
+	signal counter :integer range 0 to 499999;
 	signal tmp_clk :std_logic := '0';
 begin
 	process
@@ -20,7 +20,7 @@ begin
 		if reset = '1' then
 			counter <= 0;
 			tmp_clk <= '0';
-		elsif counter = 4999999 then
+		elsif counter = 499999 then
 			counter <= 0;
 			tmp_clk <= not tmp_clk;
 		else 
