@@ -61,14 +61,48 @@ set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_global_assignment -name VHDL_FILE decoder38.vhd
 set_global_assignment -name VHDL_FILE decoder47.vhd
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name VHDL_FILE Exp3_tb.vhd
 set_global_assignment -name EDA_TEST_BENCH_NAME Exp3_tb -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id Exp3_tb
-set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id Exp3_tb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "10000 ns" -section_id Exp3_tb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME Exp3_tb -section_id Exp3_tb
-set_global_assignment -name EDA_TEST_BENCH_FILE Exp3_tb.vhd -section_id Exp3_tb
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment PIN_K19 -to a
+set_location_assignment PIN_H18 -to b
+set_location_assignment PIN_K20 -to c
+set_location_assignment PIN_W16 -to clk
+set_location_assignment PIN_M18 -to d
+set_location_assignment PIN_Y11 -to d0
+set_location_assignment PIN_R11 -to d1
+set_location_assignment PIN_U12 -to d2
+set_location_assignment PIN_V13 -to d3
+set_location_assignment PIN_E16 -to e
+set_location_assignment PIN_AB13 -to en
+set_location_assignment PIN_G13 -to f
+set_location_assignment PIN_G17 -to g
+set_location_assignment PIN_Y14 -to s0
+set_location_assignment PIN_Y15 -to s1
+set_location_assignment PIN_AA15 -to s2
+set_location_assignment PIN_C11 -to y0
+set_location_assignment PIN_A13 -to y1
+set_location_assignment PIN_D13 -to y2
+set_location_assignment PIN_E12 -to y3
+set_location_assignment PIN_B16 -to y4
+set_location_assignment PIN_B15 -to y5
+set_location_assignment PIN_E14 -to y6
+set_location_assignment PIN_F13 -to y7
+set_location_assignment PIN_AB17 -to reset
+set_global_assignment -name VHDL_FILE clk_division.vhd
+set_global_assignment -name VHDL_FILE selector.vhd
+set_global_assignment -name VHDL_FILE selector_tb.vhd
+set_global_assignment -name EDA_TEST_BENCH_NAME selector_tb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id selector_tb
+set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "1000 ns" -section_id selector_tb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME selector_tb -section_id selector_tb
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name EDA_TEST_BENCH_FILE reg_tb.vhd -section_id reg_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE Exp3_tb.vhd -section_id Exp3_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE selector_tb.vhd -section_id selector_tb
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

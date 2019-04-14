@@ -10,22 +10,28 @@ end decoder47;
 
 architecture output of decoder47 is
 	type num  is array (6 downto 0) of std_logic;
-	type nums is array (0 to 9) of num;
+	type nums is array (0 to 15) of num;
+	constant data :nums := (
+			"1000000",
+			"1111001",
+			"0100100",
+			"0110000",
+			"0011001",
+			"0010010",
+			"0000010",
+			"1111000",
+			"0000000",
+			"0010000",
+			"1000000",
+			"1111001",
+			"0100100",
+			"0110000",
+			"0011001",
+			"0010010"
+		);
 	
 begin
 	process(x3, x2, x1, x0)
-		constant data :nums := (
-			"0000001",
-			"1001111",
-			"0010010",
-			"0000110",
-			"1001100",
-			"0100100",
-			"0100000",
-			"0001111",
-			"0000000",
-			"0001000"
-		);
 		variable tmp_num :integer range 0 to 15;
 	begin
 		tmp_num := 0;

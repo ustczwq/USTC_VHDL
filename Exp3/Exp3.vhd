@@ -12,12 +12,26 @@ entity Exp3 is
 end Exp3;
 
 architecture behave of Exp3 is
+	component clk_division is
+		port(
+			clk    :in std_logic;
+			reset  :in std_logic;
+			clk1Hz :out std_logic
+		);
+	end component;
+	
+	component selector is
+		port(
+			clk :in std_logic;
+			s0, s1, s2 :out std_logic := '0'
+		);
+	end component;
+	
 	component reg is 
 		port(
-			clk, en, reset :in std_logic;
+			clk, en, reset, a, b, c:in std_logic;
 			s0, s1, s2     :in std_logic;
 			d0, d1, d2, d3 :in std_logic;
-			sout0, sout1, sout2        :out std_logic;
 			dout0, dout1, dout2, dout3 :out std_logic
 		);
 	end component;
@@ -36,20 +50,29 @@ architecture behave of Exp3 is
 		);
 	end component;
 	
-	signal d38in0, d38in1, d38in2 : std_logic;
+	signal clk1Hz :std_logic;
+	signal sout0, sout1, sout2 :std_logic;
 	signal d47in0, d47in1, d47in2, d47in3 : std_logic;
 	
 begin
+	c1: clk_division port map(
+		clk, reset, clk1Hz
+	);
+	
+	se1: selector port map(
+		clk1Hz,
+		sout0, sout1, sout2
+	);
+	
 	r1: reg port map(
-		clk, en, reset,
-		s0, s1, s2,     
+		clk1Hz, en, reset, s2, s1, s0,
+		sout0, sout1, sout2,     
 		d0, d1, d2, d3,
-		sout0 => d38in0, sout1 => d38in1, sout2 => d38in2,
-		dout0 => d47in0, dout1 => d47in1, dout2 => d47in2, dout3 => d47in3
+		d47in0, d47in1, d47in2, d47in3
 	);
 	
 	d38: decoder38 port map(
-		x2 => d38in2, x1 => d38in1, x0 => d38in0,
+		x2 => sout2, x1 => sout1, x0 => sout0,
 		y7 => y7, y6 => y6, y5 => y5, y4 => y4, y3 => y3, y2 => y2, y1 => y1, y0 => y0
 	);
 	
