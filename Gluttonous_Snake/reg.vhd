@@ -21,9 +21,9 @@ architecture behave of reg is
 	signal food  :t_position;
 	signal snake :t_snake;
 	signal alive :std_logic := '1';
-	signal head  :integer range 0 to 127 := 1;
-	signal tail  :integer range 0 to 127 := 0;
-	signal len   :integer range 0 to 127 := 2;
+	signal head  :integer range 0 to 127;
+	signal tail  :integer range 0 to 127;
+	signal len   :integer range 0 to 127;
 	signal key   :std_logic_vector (0 to 1);
 	
 	signal counter_x   :integer range 0 to 15 :=0;
@@ -31,15 +31,30 @@ architecture behave of reg is
 	signal random_food :t_position;
 	
 begin
-	key <= k1 & k0;
-	move: process(clk, key)
+	move: process(clk, k1, k0)
 		variable x, y :integer;
 		variable eat  :std_logic := '0';
 		variable move :std_logic := '0';
+		variable i :integer;
 	begin
-		if clk'event and clk = '1' then
+		if clr = '1' then
+			for i in 0 to 15 loop
+				grid(i) <= "00000000";
+			end loop;
+			key <= "01";
+			head <= 1;
+			tail <= 0;
+			snake(0) <= (0, 4);
+			grid(0)(4) <= '1';
+			snake(1) <= (1, 4);
+			grid(1)(4) <= '1';
+			food <= (8, 3);
+			grid(8)(3) <= '1';
+			alive <= '1';
+		elsif clk'event and clk = '1' and alive = '1' then
 			x := snake(head)(0);
 			y := snake(head)(1);
+			key <= k1 & k0;
 			case key is                  -- get new head
 				when "00" => y := y - 1;  -- up		
 				when "01" => x := x + 1;  -- right			
@@ -47,12 +62,17 @@ begin
 				when "11" => y := y + 1;  -- down			
 				when others => null;
 			end case;
-			if x < 0 or x > 15 or y < 0 or y > 7 then alive <= '0';	    -- crashed into walls
-			elsif x = food(0) and y = food(1)    then eat   := '1';      -- got food
-			elsif grid(x)(y) = '1'               then alive <= '0';      -- crashed into itself
-			else                                      move  := '1';      -- just move
-			end if;
-			if move = '1' or eat = '1' then
+			if x < 0 or x > 15 or y < 0 or y > 7 then   -- crashed into walls
+				alive <= '0';
+			elsif x = food(0) and y = food(1) then  	  -- got food
+				snake((head + 1) rem 128)(0) <= x;
+				snake((head + 1) rem 128)(1) <= y;
+				head <= (head + 1) rem 128;
+				food(0) <= random_food(0);
+				food(1) <= random_food(1);
+			elsif grid(x)(y) = '1' then                 -- crashed into itself
+				alive <= '0';
+			else                                        -- just move
 				grid(x)(y) <= '1';
 				grid(snake(tail)(0))(snake(tail)(1)) <= '0';
 				snake((head + 1) rem 128)(0) <= x;
@@ -60,17 +80,13 @@ begin
 				head <= (head + 1) rem 128;
 				tail <= (tail + 1) rem 128;
 			end if;
-			if eat = '1' then
-				food(0) <= random_food(0);
-				food(1) <= random_food(1);
-			end if;
 		end if;
 	end process move;
 	
 	feed: process(clk)
 	begin 
 		counter_x <= (counter_x + 5) rem 16;
-		counter_y <= (counter_y + 3) rem 16;
+		counter_y <= (counter_y + 3) rem 8;
 		if grid(counter_x)(counter_y) = '0' then
 			random_food(0) <= counter_x;
 			random_food(1) <= counter_y;

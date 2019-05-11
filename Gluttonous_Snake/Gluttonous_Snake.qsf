@@ -55,4 +55,44 @@ set_global_assignment -name VHDL_FILE decoder.vhd
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment PIN_W16 -to clk
+set_location_assignment PIN_U12 -to clr
+set_location_assignment PIN_E7 -to y15
+set_location_assignment PIN_H6 -to y0
+set_location_assignment PIN_M9 -to y1
+set_location_assignment PIN_L8 -to y2
+set_location_assignment PIN_G10 -to y3
+set_location_assignment PIN_H8 -to y4
+set_location_assignment PIN_F7 -to y5
+set_location_assignment PIN_L7 -to y6
+set_location_assignment PIN_M6 -to y7
+set_location_assignment PIN_A8 -to y8
+set_location_assignment PIN_B5 -to y9
+set_location_assignment PIN_A5 -to y10
+set_location_assignment PIN_E10 -to y11
+set_location_assignment PIN_C8 -to y12
+set_location_assignment PIN_A10 -to y13
+set_location_assignment PIN_D6 -to y14
+set_location_assignment PIN_C1 -to x0
+set_location_assignment PIN_K7 -to x1
+set_location_assignment PIN_H9 -to x2
+set_location_assignment PIN_G6 -to x3
+set_location_assignment PIN_P6 -to x4
+set_location_assignment PIN_G2 -to x5
+set_location_assignment PIN_N6 -to x6
+set_location_assignment PIN_J8 -to x7
+set_location_assignment PIN_F12 -to x8
+set_location_assignment PIN_A7 -to x9
+set_location_assignment PIN_B10 -to x10
+set_location_assignment PIN_D9 -to x11
+set_location_assignment PIN_D3 -to x12
+set_location_assignment PIN_A9 -to x13
+set_location_assignment PIN_C2 -to x14
+set_location_assignment PIN_B7 -to x15
+set_global_assignment -name VHDL_FILE direction.vhd
+set_location_assignment PIN_AA7 -to sw0
+set_location_assignment PIN_W9 -to sw1
+set_location_assignment PIN_Y9 -to sw2
+set_location_assignment PIN_AB10 -to sw3
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

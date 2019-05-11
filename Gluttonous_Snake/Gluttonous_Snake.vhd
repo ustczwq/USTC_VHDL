@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 entity Gluttonous_Snake is
 	port (
 		clk, clr :in std_logic;
-		k1, k0 :in std_logic;
+		sw0, sw1, sw2, sw3 :in std_logic;
 		x15, x14, x13, x12, x11, x10, x9, x8 :out std_logic;
 		x7, x6, x5, x4, x3, x2, x1, x0 :out std_logic;
 		y15, y14, y13, y12, y11, y10, y9, y8 :out std_logic;
@@ -13,6 +13,13 @@ entity Gluttonous_Snake is
 end entity;
 
 architecture behave of Gluttonous_Snake is
+	component direction is 
+		port (
+			sw0, sw1, sw2, sw3 :in std_logic;
+			k1, k0 :out std_logic
+		);
+	end component;
+
 	component count is
 		port (
 			clk: in std_logic;
@@ -53,10 +60,16 @@ architecture behave of Gluttonous_Snake is
 	
 	signal clk5kHz :std_logic;
 	signal clk1Hz  :std_logic;
+	signal k1, k0  :std_logic;
 	signal c3, c2, c1, c0 :std_logic;
 	signal a, b, c, d, e, f, g, h :std_logic;
 	
 begin
+	key: direction port map (
+		sw0, sw1, sw2, sw3,
+		k1, k0
+	);
+	
 	clk5k: clk5Mto5kHz port map (
 		clk, clr, clk5kHz
 	);
