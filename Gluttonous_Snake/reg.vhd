@@ -24,6 +24,7 @@ architecture behave of reg is
 	signal head  :integer range 0 to 127;
 	signal tail  :integer range 0 to 127;
 	signal key   :std_logic_vector (0 to 1);
+	signal len   :integer := 2;
 	
 	signal rx, ry      :integer;
 	signal random_food :t_position := (0, 0);
@@ -48,6 +49,7 @@ begin
 			grid(1)(4) <= '1';
 			grid(8)(3) <= '1';
 			alive <= '1';
+			len <= 2;
 		elsif clk'event and clk = '1' and alive = '1' then
 			x := snake(head)(0);
 			y := snake(head)(1);	
@@ -61,9 +63,10 @@ begin
 			if x < 0 or x > 15 or y < 0 or y > 7 then alive <= '0';  -- crashed into walls
 			elsif x = food(0) and y = food(1) then                   -- got food
 				snake((head + 1) rem 128) <= (x, y);
-				head <= (head + 1) rem 128;	
+				head <= (head + 1) rem 128;
+				grid(random_food(0))(random_food(1)) <= '1';
 				food <= random_food;
-				grid(food(0))(food(1)) <= '1';
+				len <= len + 1;
 			elsif grid(x)(y) = '1' then alive <= '0';               -- crashed into itself
 			else                                                    -- just move
 				grid(x)(y) <= '1';
@@ -75,15 +78,15 @@ begin
 		end if;
 	end process move;
 	
-	feed: process(clk_seed)
+	seed: process(clk_seed)
 	begin
 		if clk_seed'event and clk_seed = '1' then
-			rx <= (5*rx + 3) rem 16;
-			ry <= (3*ry + 1) rem 8;
+			rx <= (len*rx + 5) rem 16;
+			ry <= (5*ry + len) rem 8;
 			if grid(rx)(ry) = '0' then random_food <= (rx, ry);
 			end if;
 		end if;
-	end process feed;
+	end process seed;
 	
 	show: process(c3, c2, c1, c0, grid)
 		variable column :integer range 0 to 15;
