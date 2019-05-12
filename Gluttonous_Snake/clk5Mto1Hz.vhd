@@ -10,16 +10,16 @@ entity clk5Mto1Hz is
 end entity;
 
 architecture division of clk5Mto1Hz is
-	signal counter :integer range 0 to 29999999;
+	signal counter :integer range 0 to 19999999;
 	signal tmp_clk :std_logic := '0';
 begin
 	process
 	begin
 		wait until rising_edge(clk);
-		if clr = '1' then
+		if clr = '0' then
 			counter <= 0;
 			tmp_clk <= '0';
-		elsif counter = 29999999 then
+		elsif counter = 19999999 then
 			counter <= 0;
 			tmp_clk <= not tmp_clk;
 		else 

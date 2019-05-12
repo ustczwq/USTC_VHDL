@@ -16,7 +16,7 @@ begin
 	process
 	begin
 		wait until rising_edge(clk);
-		if clr = '1' then
+		if clr = '0' then
 			counter <= 0;
 			tmp_clk <= '0';
 		elsif counter = 9999 then
