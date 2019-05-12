@@ -15,7 +15,7 @@ end entity;
 architecture behave of Gluttonous_Snake is
 	component direction is 
 		port (
-			clk :in std_logic;
+			clk, clr :in std_logic;
 			sw0, sw1, sw2, sw3 :in std_logic;
 			k1, k0 :out std_logic
 		);
@@ -67,7 +67,7 @@ architecture behave of Gluttonous_Snake is
 	
 begin
 	key: direction port map (
-		clk5kHz,
+		clk5kHz, clr,
 		sw0, sw1, sw2, sw3,
 		k1, k0
 	);
