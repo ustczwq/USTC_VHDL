@@ -37,6 +37,7 @@ architecture behave of Exp4 is
 	
 	component out_encode is
 		port (
+		   clk :in std_logic;
 			r0, r1, r2, r3 :in std_logic;
 			c0, c1 :in std_logic;
 			s0, s1, s2, s3 :out std_logic
@@ -68,6 +69,7 @@ begin
 	);
 	
 	oe: out_encode port map(
+		clk5kHz,
 		r0, r1, r2, r3,
 		cou0, cou1,
 		s0, s1, s2, s3
