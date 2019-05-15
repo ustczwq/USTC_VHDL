@@ -54,6 +54,7 @@ architecture behave of reg is
 	
 	signal current :integer range 0 to 27 := 0;
 	signal random  :integer range 0 to 27 := 0;
+	signal counter :integer range 0 to 500;
 	
 	signal dx    :integer range 0 to 7  := 0;
 	signal dy    :integer range 0 to 15 := 0; 
@@ -69,9 +70,10 @@ begin
 		variable err    :std_logic;
 		variable fix    :std_logic;
 		variable full   :std_logic;
+		variable tmp_current :integer;
 	begin	
-		if clr = '0' then
-			for i in 0 to 15 loop   -- clear grid show
+		if clr = '0' then          -- clear grid show
+			for i in 0 to 15 loop   
 				grid(i)  <= "00000000";
 			end loop;
 			current <= 0;
@@ -79,32 +81,35 @@ begin
 			dx <= 0;
 			dy <= 0;
 		elsif alive = '0' then null;
-		elsif clk'event and clk = '1' then   
+		elsif clk'event and clk = '1' then
+			tmp_current := current;
 			tmp_dx := dx;
-			tmp_dy := dy + 1;
+			if counter = 0 then tmp_dy := dy + 1;   -- auto move: 1Hz
+			else tmp_dy := tmp_dy;
+			end if;
 			
-			case key is
+			case key is             -- get pressed key
 				when "00" => null;
 				when "01" => tmp_dx := tmp_dx + 1;
 				when "10" => tmp_dx := tmp_dx - 1;
-				when "11" => null;
+				when "11" => tmp_current := (tmp_current + 7) rem 28;
 				when others => null;
 			end case;
 			
-			err := '0';
-			fix := '0';
+			err := '0';            -- flag: out of range 
+			fix := '0';            -- flag: touch bottom
 			for i in 0 to 3 loop
-				x := shapes(current)(i)(1) + tmp_dx;
-				y := shapes(current)(i)(0) + tmp_dy;
+				x := shapes(tmp_current)(i)(1) + tmp_dx;
+				y := shapes(tmp_current)(i)(0) + tmp_dy;
 				if x < 0 or x > 7 then err := '1';
 				elsif y = 16 or grid(y)(x) = '1' then fix := '1';
 				end if;
 			end loop;
 			
-			if fix = '1' then      -- touch bottom 
+			if fix = '1' then      -- touch bottom, fixed grid show
 				for i in 0 to 3 loop
-					x := shapes(current)(i)(1) + dx;
-					y := shapes(current)(i)(0) + dy;
+					x := shapes(tmp_current)(i)(1) + dx;
+					y := shapes(tmp_current)(i)(0) + dy;
 					grid(y)(x) <= '1';
 				end loop;
 				current <= random;
@@ -115,8 +120,10 @@ begin
 			else                   -- move by pressed key
 				dx <= tmp_dx;
 				dy <= tmp_dy;
-			end if;	
-			for i in 15 downto 0 loop
+				current <= tmp_current;
+			end if;
+			
+			for i in 15 downto 0 loop   -- detect full to remove
 				full := '1';
 				for j in 0 to 7 loop
 					if grid(i)(j) = '0' then full := '0';
@@ -134,7 +141,8 @@ begin
 	seed: process(clk_seed)
 	begin
 		if clk_seed'event and clk_seed = '1' then
-			random <= (random + 5) rem 28;
+			random  <= (random  + 5) rem 28;
+			counter <= (counter + 1) rem 500;
 		end if;
 	end process seed;
 	
@@ -142,7 +150,6 @@ begin
 		variable num    :integer range 0 to 15;
 		variable x, y   :integer;
 		variable column :t_column;
-	
 	begin
 		num := 0;
 		if c3 = '1' then num := num + 8;
@@ -153,9 +160,9 @@ begin
 		end if;
 		if c0 = '1' then num := num + 1;
 		end if;
-		column := grid(num);
+		column := grid(num);         -- grid to show
 		
-		for i in 0 to 3 loop
+		for i in 0 to 3 loop         -- shape to show
 			x := shapes(current)(i)(1) + dx;
 			y := shapes(current)(i)(0) + dy;
 			if y = num then column(x) := '1';
