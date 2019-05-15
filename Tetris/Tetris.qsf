@@ -1,0 +1,100 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2013 Altera Corporation
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, Altera MegaCore Function License 
+# Agreement, or other applicable license agreement, including, 
+# without limitation, that your use is for the sole purpose of 
+# programming logic devices manufactured by Altera and sold by 
+# Altera or its authorized distributors.  Please refer to the 
+# applicable agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II 64-Bit
+# Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
+# Date created = 11:26:45  May 14, 2019
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		Tetris_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+set_global_assignment -name FAMILY "Cyclone V"
+set_global_assignment -name DEVICE 5CEFA2F23C8
+set_global_assignment -name TOP_LEVEL_ENTITY Tetris
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:26:45  MAY 14, 2019"
+set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
+set_global_assignment -name VHDL_FILE reg.vhd
+set_global_assignment -name VHDL_FILE direction.vhd
+set_global_assignment -name VHDL_FILE decoder.vhd
+set_global_assignment -name VHDL_FILE count.vhd
+set_global_assignment -name VHDL_FILE clk5Mto5kHz.vhd
+set_global_assignment -name VHDL_FILE clk5Mto1Hz.vhd
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name VHDL_FILE Tetris.vhd
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment PIN_W16 -to clk
+set_location_assignment PIN_N16 -to clr
+set_location_assignment PIN_AA17 -to sw0
+set_location_assignment PIN_W9 -to sw1
+set_location_assignment PIN_Y9 -to sw2
+set_location_assignment PIN_AB10 -to sw3
+set_location_assignment PIN_E7 -to y0
+set_location_assignment PIN_D6 -to y1
+set_location_assignment PIN_A10 -to y2
+set_location_assignment PIN_C8 -to y3
+set_location_assignment PIN_E10 -to y4
+set_location_assignment PIN_A5 -to y5
+set_location_assignment PIN_B5 -to y6
+set_location_assignment PIN_A8 -to y7
+set_location_assignment PIN_M6 -to y8
+set_location_assignment PIN_L7 -to y9
+set_location_assignment PIN_F7 -to y10
+set_location_assignment PIN_H8 -to y11
+set_location_assignment PIN_G10 -to y12
+set_location_assignment PIN_L8 -to y13
+set_location_assignment PIN_M9 -to y14
+set_location_assignment PIN_H6 -to y15
+set_location_assignment PIN_C1 -to x0
+set_location_assignment PIN_K7 -to x1
+set_location_assignment PIN_H9 -to x2
+set_location_assignment PIN_G6 -to x3
+set_location_assignment PIN_P6 -to x4
+set_location_assignment PIN_G2 -to x5
+set_location_assignment PIN_N6 -to x6
+set_location_assignment PIN_J8 -to x7
+set_location_assignment PIN_F12 -to x8
+set_location_assignment PIN_A7 -to x9
+set_location_assignment PIN_B10 -to x10
+set_location_assignment PIN_D9 -to x11
+set_location_assignment PIN_D3 -to x12
+set_location_assignment PIN_A9 -to x13
+set_location_assignment PIN_C2 -to x14
+set_location_assignment PIN_B7 -to x15
+set_location_assignment PIN_Y11 -to k1
+set_location_assignment PIN_R11 -to k0
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
