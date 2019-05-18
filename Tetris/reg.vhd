@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 entity reg is 
 	port (
 		clk, clk_seed, clr     :in std_logic;
-		k1, k0                 :in std_logic;
+		k2, k1, k0             :in std_logic;
 		c3, c2, c1, c0         :in std_logic;
 		a, b, c, d, e, f, g, h :out std_logic
 	);
@@ -54,16 +54,16 @@ architecture behave of reg is
 	
 	signal current :integer range 0 to 27 := 0;
 	signal random  :integer range 0 to 27 := 0;
-	signal counter :integer range 0 to 500;
+	signal counter :integer range 0 to 4 := 0;
 	
 	signal dx    :integer range 0 to 7  := 0;
 	signal dy    :integer range 0 to 15 := 0; 
 	signal alive :std_logic := '1';
-	signal key   :std_logic_vector (0 to 1);
+	signal key   :std_logic_vector (0 to 2);
 	
 begin
-	key <= k1 & k0;
-	move: process(clk, clr, key, alive, dx, dy)
+	key <= k2 & k1 & k0;
+	move: process(clk, clr, key, alive, dx, dy, counter)
 		variable x, y   :integer;
 		variable tmp_dx :integer;
 		variable tmp_dy :integer;
@@ -71,6 +71,7 @@ begin
 		variable fix    :std_logic;
 		variable full   :std_logic;
 		variable tmp_current :integer;
+		variable tmp_counter :integer;
 	begin	
 		if clr = '0' then          -- clear grid show
 			for i in 0 to 15 loop   
@@ -84,15 +85,17 @@ begin
 		elsif clk'event and clk = '1' then
 			tmp_current := current;
 			tmp_dx := dx;
+			
 			if counter = 0 then tmp_dy := dy + 1;   -- auto move: 1Hz
-			else tmp_dy := tmp_dy;
+			else tmp_dy := dy;
 			end if;
 			
 			case key is             -- get pressed key
-				when "00" => null;
-				when "01" => tmp_dx := tmp_dx + 1;
-				when "10" => tmp_dx := tmp_dx - 1;
-				when "11" => tmp_current := (tmp_current + 7) rem 28;
+				when "000" => null;
+				when "001" => tmp_dx := tmp_dx + 1;
+				when "100" => tmp_dx := tmp_dx - 1;
+				when "010" => tmp_dy := tmp_dy + 1;
+				when "111" => tmp_current := (tmp_current + 7) rem 28;
 				when others => null;
 			end case;
 			
@@ -135,6 +138,8 @@ begin
 					end loop;
 				end if;
 			end loop;
+			
+			counter <= (counter + 1) rem 5;
 		end if;
 	end process move;
 	
@@ -142,7 +147,6 @@ begin
 	begin
 		if clk_seed'event and clk_seed = '1' then
 			random  <= (random  + 5) rem 28;
-			counter <= (counter + 1) rem 500;
 		end if;
 	end process seed;
 	
