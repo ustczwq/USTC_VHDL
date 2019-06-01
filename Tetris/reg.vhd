@@ -105,7 +105,7 @@ begin
 				x := shapes(tmp_current)(i)(1) + tmp_dx;
 				y := shapes(tmp_current)(i)(0) + tmp_dy;
 				if x < 0 or x > 7 then err := '1';
-				elsif y = 16 or grid(y)(x) = '1' then fix := '1';
+				elsif y = 16 or grid(y)(x) = '1' then fix := '1';   -- bug here !!!!!!!!!!!!!!!!!!!!!!!
 				end if;
 			end loop;
 			
