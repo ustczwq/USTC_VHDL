@@ -1,0 +1,333 @@
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 01:00:57 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Programs\C51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\main.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <stdlib.h>
+   3          
+   4          #define uchar unsigned char
+   5          #define uint unsigned int
+   6          
+   7          #define EAT 2
+   8          #define MOVE 1
+   9          #define CRASH 0
+  10          
+  11          #define ON 0
+  12          #define OFF 1
+  13          
+  14          #define LEN 80
+  15          
+  16          uchar snake[LEN];
+  17          uchar grid[16];
+  18          uchar key = 0;
+  19          uchar alive = 1;
+  20          uchar head = 1;
+  21          uchar tail = 0;
+  22          uchar food = 0x44;
+  23          uchar column = 0;
+  24          uchar random = 0;
+  25          uchar counter = 0;
+  26          
+  27          sbit U = P0 ^ 0;
+  28          sbit L = P0 ^ 1;
+  29          sbit R = P0 ^ 2;
+  30          sbit D = P0 ^ 3;
+  31          
+  32          void timeInit(void);
+  33          void snakeInit(void);
+  34          void display(void);
+  35          uchar control(void);
+  36          uchar keyDetect(void);
+  37          uchar randomNum(void);
+  38          uchar randomFood(void);
+  39          uchar showColumn(uchar col);
+  40          uchar isOn(uchar x, uchar y);
+  41          uchar isFood(uchar x, uchar y);
+  42          uchar getStatus(uchar x, uchar y);
+  43          uchar setPoint(uchar pos, uchar off);
+  44          uchar setPos(uchar x, uchar y, uchar index);
+  45          uchar getPos(uchar *x, uchar *y, uchar index);
+  46          
+  47          
+  48          void main()
+  49          {
+  50   1              timeInit();
+  51   1              snakeInit();
+  52   1              while (1)
+  53   1              {
+  54   2                      display();
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 01:00:57 PAGE 2   
+
+  55   2                      keyDetect();
+  56   2                      randomNum();
+  57   2              }
+  58   1      }
+  59          
+  60          void timeIRQ(void) interrupt 1 using 0
+  61          {
+  62   1              counter++;
+  63   1      
+  64   1              if (counter == 5)
+  65   1              {
+  66   2                      counter = 0;
+  67   2                      if (alive == 1)
+  68   2                              control();
+  69   2              }
+  70   1      }
+  71          
+  72          uchar control(void)
+  73          {
+  74   1              uchar x, y, status;
+  75   1              getPos(&x, &y, head);
+  76   1              switch (key)
+  77   1              {
+  78   2              case 'U':
+  79   2                      y--;
+  80   2                      break;
+  81   2              case 'D':
+  82   2                      y++;
+  83   2                      break;
+  84   2              case 'L':
+  85   2                      x--;
+  86   2                      break;
+  87   2              case 'R':
+  88   2                      x++;
+  89   2                      break;
+  90   2              default:
+  91   2                      break;
+  92   2              }
+  93   1      
+  94   1              status = getStatus(x, y);
+  95   1              switch (status)
+  96   1              {
+  97   2              case EAT:
+  98   2                      head = (head + 1) % LEN;
+  99   2                      setPos(x, y, head);
+ 100   2                      food = randomFood();
+ 101   2                      setPoint(food, ON);
+ 102   2                      break;
+ 103   2              case MOVE:
+ 104   2                      head = (head + 1) % LEN;
+ 105   2                      setPos(x, y, head);
+ 106   2                      setPoint(snake[head], ON);
+ 107   2                      setPoint(snake[tail], OFF);
+ 108   2                      tail = (tail + 1) % LEN;
+ 109   2                      break;
+ 110   2              case CRASH:
+ 111   2                      alive = 0;
+ 112   2                      break;
+ 113   2              default:
+ 114   2                      break;
+ 115   2              }
+ 116   1      
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 01:00:57 PAGE 3   
+
+ 117   1              return 0;
+ 118   1      }
+ 119          
+ 120          uchar keyDetect(void)
+ 121          {
+ 122   1              if (U == 0)
+ 123   1                      key = 'U';
+ 124   1              else if (D == 0)
+ 125   1                      key = 'D';
+ 126   1              else if (L == 0)
+ 127   1                      key = 'L';
+ 128   1              else if (R == 0)
+ 129   1                      key = 'R';
+ 130   1              else
+ 131   1                      return 0;
+ 132   1      
+ 133   1              return key;
+ 134   1      }
+ 135          
+ 136          void timeInit(void)
+ 137          {
+ 138   1              TMOD = 0x01;
+ 139   1              TH0 = (65536 - 50000) / 256; //50 ms
+ 140   1              TL0 = (65536 - 50000) % 256;
+ 141   1              ET0 = 1;
+ 142   1              TR0 = 1;
+ 143   1              EA = 1;
+ 144   1      }
+ 145          
+ 146          void snakeInit(void)
+ 147          {
+ 148   1              int i = 0;
+ 149   1              for (i = 0; i < 16; i++)
+ 150   1                      grid[i] = 0xff;
+ 151   1      
+ 152   1              head = 1;
+ 153   1              snake[1] = 0x13;
+ 154   1              setPoint(snake[1], ON);
+ 155   1      
+ 156   1              tail = 0;
+ 157   1              snake[0] = 0x03;
+ 158   1              setPoint(snake[0], ON);
+ 159   1      
+ 160   1              food = 0x83;
+ 161   1              setPoint(food, ON);
+ 162   1      
+ 163   1              key = 'R';
+ 164   1              alive = 1;
+ 165   1      }
+ 166          
+ 167          uchar setPoint(uchar pos, uchar off)
+ 168          {
+ 169   1              uchar x = pos >> 4;
+ 170   1              uchar y = pos & 0x0f;
+ 171   1      
+ 172   1              if (x < 0 || x > 15 || y < 0 || y > 7)
+ 173   1                      return 0;
+ 174   1              else
+ 175   1              {
+ 176   2                      uchar col = 0x80 >> y;
+ 177   2                      if (off)
+ 178   2                              grid[x] |= col;
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 01:00:57 PAGE 4   
+
+ 179   2                      else
+ 180   2                              grid[x] &= (0xff - col);
+ 181   2                      return 1;
+ 182   2              }
+ 183   1      }
+ 184          
+ 185          void display(void)
+ 186          {
+ 187   1              if (column == 15)
+ 188   1                      column = 0;
+ 189   1              else
+ 190   1                      column++;
+ 191   1              
+ 192   1              showColumn(column);
+ 193   1      }
+ 194          
+ 195          uchar showColumn(uchar col)
+ 196          {
+ 197   1              if (col >= 0 && col <= 7)
+ 198   1              {
+ 199   2                      P2 = 0x80 >> col;
+ 200   2                      P3 = 0x00;
+ 201   2                      P1 = grid[col];
+ 202   2                      return 1;
+ 203   2              }
+ 204   1              else if (col >= 8 && col <= 15)
+ 205   1              {
+ 206   2                      P3 = 0x80 >> (col - 8);
+ 207   2                      P2 = 0x00;
+ 208   2                      P1 = grid[col];
+ 209   2                      return 1;
+ 210   2              }
+ 211   1              else
+ 212   1                      return 0;
+ 213   1      }
+ 214          
+ 215          uchar getPos(uchar *x, uchar *y, uchar index)
+ 216          {
+ 217   1              if (index < 0 || index > 128)
+ 218   1                      return 0;
+ 219   1              else
+ 220   1              {
+ 221   2                      uchar pos = snake[index];
+ 222   2                      *x = pos >> 4;
+ 223   2                      *y = pos & 0x0f;
+ 224   2                      return 1;
+ 225   2              }
+ 226   1      }
+ 227          
+ 228          uchar setPos(uchar x, uchar y, uchar index)
+ 229          {
+ 230   1              if (index < 0 || index > 128)
+ 231   1                      return 0;
+ 232   1              else
+ 233   1              {
+ 234   2                      snake[index] = x << 4;
+ 235   2                      snake[index] += y;
+ 236   2                      return 1;
+ 237   2              }
+ 238   1      }
+ 239          
+ 240          uchar getStatus(uchar x, uchar y)
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 01:00:57 PAGE 5   
+
+ 241          {
+ 242   1              if (x < 0 || x > 15 || y < 0 || y > 7)
+ 243   1                      return CRASH;
+ 244   1              else if (isOn(x, y))
+ 245   1              {
+ 246   2                      if (isFood(x, y))
+ 247   2                              return EAT;
+ 248   2                      else
+ 249   2                              return CRASH;
+ 250   2              }
+ 251   1              else
+ 252   1                      return MOVE;
+ 253   1      }
+ 254          
+ 255          uchar isOn(uchar x, uchar y)
+ 256          {
+ 257   1              if (x < 0 || x > 15 || y < 0 || y > 7)
+ 258   1                      return 0;
+ 259   1              else
+ 260   1              {
+ 261   2                      uchar col = 0x80 >> y;
+ 262   2                      col &= grid[x];
+ 263   2                      if (col)
+ 264   2                              return 0;
+ 265   2                      else
+ 266   2                              return 1;
+ 267   2              }
+ 268   1      }
+ 269          
+ 270          uchar isFood(uchar x, uchar y)
+ 271          {
+ 272   1              if (x < 0 || x > 15 || y < 0 || y > 7)
+ 273   1                      return 0;
+ 274   1              else if (y == (food & 0x0f) && x == (food >> 4))
+ 275   1                      return 1;
+ 276   1              else
+ 277   1                      return 0;
+ 278   1      }
+ 279          
+ 280          uchar randomNum(void)
+ 281          {
+ 282   1              uint num = rand();
+ 283   1              num *= head;
+ 284   1              num += key;
+ 285   1              random =  num % 0xff;
+ 286   1              return random;
+ 287   1      }
+ 288          
+ 289          uchar randomFood(void)
+ 290          {
+ 291   1              uchar pos = random & 0xf7;
+ 292   1              while (isOn(pos >> 4, pos & 0x0f))
+ 293   1              {
+ 294   2                      pos = (pos + random) % 0xff;
+ 295   2                      pos &= 0xf7;
+ 296   2              }
+ 297   1              
+ 298   1              return pos;
+ 299   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 01:00:57 PAGE 6   
+
+   CODE SIZE        =    912    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =    104      14
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
