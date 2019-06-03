@@ -44,7 +44,6 @@ uchar setPoint(uchar pos, uchar off);
 uchar setPos(uchar x, uchar y, uchar index);
 uchar getPos(uchar *x, uchar *y, uchar index);
 
-
 void main()
 {
 	timeInit();
@@ -188,7 +187,7 @@ void display(void)
 		column = 0;
 	else
 		column++;
-	
+
 	showColumn(column);
 }
 
@@ -282,7 +281,7 @@ uchar randomNum(void)
 	uint num = rand();
 	num *= head;
 	num += key;
-	random =  num % 0xff;
+	random = num % 0xff;
 	return random;
 }
 
@@ -294,6 +293,6 @@ uchar randomFood(void)
 		pos = (pos + random) % 0xff;
 		pos &= 0xf7;
 	}
-	
+
 	return pos;
 }
