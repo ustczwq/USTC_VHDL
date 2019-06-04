@@ -53,7 +53,7 @@ begin
 		elsif clk'event and clk = '1' and alive = '1' then
 			x := snake(head)(0);
 			y := snake(head)(1);	
-			case key is                  -- get temp new head
+			case key is                   -- get temp new head
 				when "00" => y := y - 1;  -- up		
 				when "01" => x := x + 1;  -- right			
 				when "10" => x := x - 1;  -- left			
