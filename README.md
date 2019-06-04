@@ -14,8 +14,7 @@ USTC 电子系统设计实验
 - MCU 实验
   - Keil uVision5 C51
   - Proteus 8 Professional
-
-
+- Typora 撰写报告和生成 pdf
 
 ## 实验内容
 
