@@ -1,0 +1,147 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    05/26/2019  16:56:25  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\PROGRAMS\C51\C51\BIN\BL51.EXE .\Objects\show.obj TO .\Objects\LED PRINT (.\Listings\LED.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\show.obj (SHOW)
+  C:\PROGRAMS\C51\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\PROGRAMS\C51\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\LED (SHOW)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?SHOW
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+                    0006H     000DH                  *** GAP ***
+            CODE    0013H     0003H     ABSOLUTE     
+                    0016H     07EAH                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     003DH     UNIT         ?PR?INT_0?SHOW
+            CODE    08C9H     003CH     UNIT         ?PR?INT_1?SHOW
+            CODE    0905H     002CH     UNIT         ?PR?_DELAY?SHOW
+            CODE    0931H     0016H     UNIT         ?PR?MAIN?SHOW
+            CODE    0947H     000AH     UNIT         ?CO?SHOW
+            CODE    0951H     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\LED (SHOW)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?PR?INT_0?SHOW
+  +--> ?PR?_DELAY?SHOW
+  +--> ?CO?SHOW
+
+*** NEW ROOT ***************************************************
+
+?PR?INT_1?SHOW
+  +--> ?PR?_DELAY?SHOW
+  +--> ?CO?SHOW
+
+*** NEW ROOT ***************************************************
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/26/2019  16:56:25  PAGE 2
+
+
+?C_C51STARTUP
+  +--> ?PR?MAIN?SHOW
+  +--> ?C_INITSEG
+
+?PR?MAIN?SHOW
+  +--> ?CO?SHOW
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\LED (SHOW)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        SHOW
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  B:00A8H.7       PUBLIC        EA
+  C:0947H         PUBLIC        table
+  C:0905H         PUBLIC        _delay
+  C:0931H         PUBLIC        main
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  D:0008H         PUBLIC        m
+  C:088CH         PUBLIC        INT_0
+  C:08C9H         PUBLIC        INT_1
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        ms
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0005H         SYMBOL        j
+  -------         ENDDO         
+  C:0905H         LINE#         8
+  C:0905H         LINE#         9
+  C:0905H         LINE#         11
+  C:090FH         LINE#         12
+  C:091BH         LINE#         13
+  C:0930H         LINE#         14
+  -------         ENDPROC       _DELAY
+  -------         PROC          INT_0
+  C:088CH         LINE#         17
+  C:089DH         LINE#         19
+  C:089FH         LINE#         20
+  C:08A4H         LINE#         21
+  C:08A6H         LINE#         22
+  C:08B0H         LINE#         23
+  C:08B2H         LINE#         24
+  C:08BAH         LINE#         25
+  -------         ENDPROC       INT_0
+  -------         PROC          INT_1
+  C:08C9H         LINE#         27
+  C:08DAH         LINE#         29
+  C:08DCH         LINE#         30
+  C:08E1H         LINE#         31
+  C:08E3H         LINE#         32
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  05/26/2019  16:56:25  PAGE 3
+
+
+  C:08ECH         LINE#         33
+  C:08EEH         LINE#         34
+  C:08F6H         LINE#         35
+  -------         ENDPROC       INT_1
+  -------         PROC          MAIN
+  C:0931H         LINE#         38
+  C:0931H         LINE#         39
+  C:0931H         LINE#         40
+  C:0934H         LINE#         41
+  C:0936H         LINE#         42
+  C:0938H         LINE#         43
+  C:093AH         LINE#         44
+  C:093CH         LINE#         45
+  C:093EH         LINE#         47
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SHOW
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00CEH BYTE (10%) *
+******************************************************************************
+
+Program Size: data=10.0 xdata=0 code=350
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

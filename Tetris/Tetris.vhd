@@ -4,8 +4,7 @@ use ieee.std_logic_1164.all;
 entity Tetris is
 	port (
 		clk, clr :in std_logic;
---		sw0, sw1, sw2, sw3 :in std_logic;
-		k1, k0   :std_logic;
+		sw0, sw1, sw2, sw3 :in std_logic;
 		x15, x14, x13, x12, x11, x10, x9, x8 :out std_logic;
 		x7, x6, x5, x4, x3, x2, x1, x0 :out std_logic;
 		y15, y14, y13, y12, y11, y10, y9, y8 :out std_logic;
@@ -14,13 +13,13 @@ entity Tetris is
 end entity;
 
 architecture behave of Tetris is
---	component direction is 
---		port (
---			clk, clr :in std_logic;
---			sw0, sw1, sw2, sw3 :in std_logic;
---			k1, k0 :out std_logic
---		);
---	end component;
+	component direction is 
+		port (
+			clk, clr :in std_logic;
+			sw0, sw1, sw2, sw3 :in std_logic;
+			k2, k1, k0 :out std_logic
+		);
+	end component;
 
 	component count is
 		port (
@@ -46,7 +45,7 @@ architecture behave of Tetris is
 	component reg is 
 		port (
 			clk, clk_seed, clr :in std_logic;
-			k1, k0 :in std_logic;
+			k2, k1, k0 :in std_logic;
 			c3, c2, c1, c0 :in std_logic;
 			a, b, c, d, e, f, g, h :out std_logic
 		);
@@ -62,16 +61,16 @@ architecture behave of Tetris is
 	
 	signal clk5kHz :std_logic;
 	signal clk1Hz  :std_logic;
---	signal k1, k0  :std_logic;
+	signal k2, k1, k0  :std_logic;
 	signal c3, c2, c1, c0 :std_logic;
 	signal a, b, c, d, e, f, g, h :std_logic;
 	
 begin
---	key: direction port map (
---		clk5kHz, clr,
---		sw0, sw1, sw2, sw3,
---		k1, k0
---	);
+	key: direction port map (
+		clk5kHz, clr,
+		sw0, sw1, sw2, sw3,
+		k2, k1, k0
+	);
 	
 	clk5k: clk5Mto5kHz port map (
 		clk, clr, clk5kHz
@@ -88,7 +87,7 @@ begin
 	
 	re: reg port map (
 		clk1Hz, clk5kHz, clr,
-		k1, k0,
+		k2, k1, k0,
 		c3, c2, c1, c0,
 		a, b, c, d, e, f, g, h
 	);

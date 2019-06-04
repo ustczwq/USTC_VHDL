@@ -1,0 +1,195 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    06/01/2019  18:37:30  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\PROGRAMS\C51\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\ShowVoltage.obj TO .\Objects\Voltage PRINT (.\Listings
+>> \Voltage.m51)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\STARTUP.obj (?C_STARTUP)
+  .\Objects\ShowVoltage.obj (SHOWVOLTAGE)
+  C:\PROGRAMS\C51\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  C:\PROGRAMS\C51\C51\LIB\C51FPS.LIB (?C?FPDIV)
+  C:\PROGRAMS\C51\C51\LIB\C51FPS.LIB (?C?FCAST)
+  C:\PROGRAMS\C51\C51\LIB\C51FPS.LIB (?C?CASTF)
+  C:\PROGRAMS\C51\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  C:\PROGRAMS\C51\C51\LIB\C51S.LIB (?C?UIDIV)
+  C:\PROGRAMS\C51\C51\LIB\C51S.LIB (?C?LNEG)
+
+
+LINK MAP OF MODULE:  .\Objects\Voltage (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     02C8H     UNIT         ?C?LIB_CODE
+            CODE    02CBH     0095H     UNIT         ?PR?MAIN?SHOWVOLTAGE
+            CODE    0360H     0028H     UNIT         ?PR?_DELAY?SHOWVOLTAGE
+            CODE    0388H     0020H     UNIT         ?CO?SHOWVOLTAGE
+            CODE    03A8H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Voltage (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?SHOWVOLTAGE
+
+?PR?MAIN?SHOWVOLTAGE
+  +--> ?PR?_DELAY?SHOWVOLTAGE
+  +--> ?CO?SHOWVOLTAGE
+
+?PR?_DELAY?SHOWVOLTAGE
+  +--> ?CO?SHOWVOLTAGE
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/01/2019  18:37:30  PAGE 2
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Voltage (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:03A8H         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:03ABH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:03A8H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:03A8H         LINE#         133
+  C:03AAH         LINE#         134
+  C:03ABH         LINE#         135
+  C:03ACH         LINE#         136
+  C:03AEH         LINE#         185
+  C:03B1H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        SHOWVOLTAGE
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0388H         PUBLIC        table
+  B:00B0H.0       PUBLIC        START
+  C:037DH         PUBLIC        _delay
+  B:00B0H.2       PUBLIC        OE
+  C:02CBH         PUBLIC        main
+  B:0090H.0       PUBLIC        dot
+  B:00B0H.1       PUBLIC        EOC
+  C:0379H         SYMBOL        L?0010
+  -------         PROC          L?0009
+  -------         ENDPROC       L?0009
+  C:0379H         SYMBOL        L?0010
+  -------         PROC          _DELAY
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/01/2019  18:37:30  PAGE 3
+
+
+  D:0006H         SYMBOL        m
+  C:037DH         LINE#         12
+  C:037DH         LINE#         13
+  C:037DH         LINE#         14
+  C:0387H         LINE#         15
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:0002H         SYMBOL        temp
+  -------         ENDDO         
+  C:02CBH         LINE#         17
+  C:02CBH         LINE#         18
+  C:02CBH         LINE#         19
+  C:02CEH         LINE#         20
+  C:02D0H         LINE#         21
+  C:02D2H         LINE#         22
+  C:02D4H         LINE#         23
+  C:02D6H         LINE#         24
+  C:02D6H         LINE#         25
+  C:02D9H         LINE#         26
+  C:02DBH         LINE#         27
+  C:02E1H         LINE#         28
+  C:0304H         LINE#         29
+  C:0306H         LINE#         30
+  C:0309H         LINE#         31
+  C:0311H         LINE#         32
+  C:0314H         LINE#         33
+  C:0317H         LINE#         34
+  C:0326H         LINE#         35
+  C:0329H         LINE#         36
+  C:032CH         LINE#         37
+  C:0354H         LINE#         38
+  C:0356H         LINE#         39
+  C:0359H         LINE#         40
+  C:035BH         LINE#         41
+  C:035DH         LINE#         42
+  C:035DH         LINE#         43
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        SHOWVOLTAGE
+
+  -------         MODULE        ?C?FPMUL
+  C:0003H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FPDIV
+  C:010CH         PUBLIC        ?C?FPDIV
+  -------         ENDMOD        ?C?FPDIV
+
+  -------         MODULE        ?C?FCAST
+  C:01B3H         PUBLIC        ?C?FCASTC
+  C:01AEH         PUBLIC        ?C?FCASTI
+  C:01A9H         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?CASTF
+  C:01E7H         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/01/2019  18:37:30  PAGE 4
+
+
+
+  -------         MODULE        ?C?UIDIV
+  C:0268H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+  -------         MODULE        ?C?LNEG
+  C:02BDH         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+Program Size: data=9.0 xdata=0 code=948
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

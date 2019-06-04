@@ -1,0 +1,362 @@
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:14:48 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Programs\C51\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\main.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <stdlib.h>
+   3          
+   4          #define uchar unsigned char
+   5          #define uint unsigned int
+   6          
+   7          #define MOVE 2
+   8          #define FIX 1
+   9          #define OUT 0
+  10          
+  11          #define ON 0
+  12          #define OFF 1
+  13          
+  14          sbit U = P0 ^ 0;
+  15          sbit L = P0 ^ 1;
+  16          sbit R = P0 ^ 2;
+  17          sbit D = P0 ^ 3;
+  18          
+  19          uchar grid[16];
+  20          uchar key = 0;
+  21          uchar row = 0;
+  22          uchar alive = 1;
+  23          uchar index = 0;
+  24          uchar random = 0;
+  25          uchar ctrlCounter = 0;
+  26          uchar fallCounter = 0;
+  27          uchar dx = 0, dy = 0;
+  28          
+  29          uchar code shape[28][4][2] = {
+  30              {{0, 0}, {0, 1}, {1, 0}, {1, 1}}, // 7 basic shapes
+  31              {{0, 0}, {1, 0}, {2, 0}, {3, 0}},
+  32              {{0, 0}, {0, 1}, {1, 1}, {2, 1}},
+  33              {{1, 0}, {0, 1}, {1, 1}, {2, 1}},
+  34              {{2, 0}, {0, 1}, {1, 1}, {2, 1}},
+  35              {{0, 0}, {1, 0}, {1, 1}, {2, 1}},
+  36              {{1, 0}, {2, 0}, {0, 1}, {1, 1}},
+  37          
+  38              {{0, 0}, {0, 1}, {1, 0}, {1, 1}}, // rotate 90  deg
+  39              {{0, 0}, {0, 1}, {0, 2}, {0, 3}},
+  40              {{1, 0}, {0, 0}, {0, 1}, {0, 2}},
+  41              {{1, 1}, {0, 0}, {0, 1}, {0, 2}},
+  42              {{1, 2}, {0, 0}, {0, 1}, {0, 2}},
+  43              {{0, 1}, {0, 2}, {1, 0}, {1, 1}},
+  44              {{0, 0}, {0, 1}, {1, 1}, {1, 2}},
+  45          
+  46              {{0, 0}, {0, 1}, {1, 0}, {1, 1}}, // rotate 180 deg
+  47              {{0, 0}, {1, 0}, {2, 0}, {3, 0}},
+  48              {{0, 0}, {1, 0}, {2, 0}, {2, 1}},
+  49              {{0, 0}, {1, 0}, {2, 0}, {1, 1}},
+  50              {{0, 0}, {1, 0}, {2, 0}, {0, 1}},
+  51              {{0, 0}, {1, 0}, {1, 1}, {2, 1}},
+  52              {{1, 0}, {2, 0}, {0, 1}, {1, 1}},
+  53          
+  54              {{0, 0}, {0, 1}, {1, 0}, {1, 1}}, // rotate 270 deg
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:14:48 PAGE 2   
+
+  55              {{0, 0}, {0, 1}, {0, 2}, {0, 3}},
+  56              {{0, 2}, {1, 0}, {1, 1}, {1, 2}},
+  57              {{0, 1}, {1, 0}, {1, 1}, {1, 2}},
+  58              {{0, 0}, {1, 0}, {1, 1}, {1, 2}},
+  59              {{0, 1}, {0, 2}, {1, 0}, {1, 1}},
+  60              {{0, 0}, {0, 1}, {1, 1}, {1, 2}},
+  61          };
+  62          
+  63          void timeInit(void);
+  64          void control();
+  65          void keyDetect(void);
+  66          void tetrisInit(void);
+  67          void clearGrid(void);
+  68          uchar showRow(uchar r);
+  69          void display(void);
+  70          uchar isOn(uchar x, uchar y);
+  71          uchar getStatus(uchar _index, uchar _dx, uchar _dy);
+  72          uchar getRotate(void);
+  73          void delay(uint m);
+  74          void fakeRandom(void);
+  75          void fixTerm(uchar _dx, uchar _dy);
+  76          void removeFull(void);
+  77          
+  78          void main()
+  79          {
+  80   1          timeInit();
+  81   1          tetrisInit();
+  82   1          while (1)
+  83   1          {
+  84   2              display();
+  85   2              fakeRandom();
+  86   2              delay(200);
+  87   2          }
+  88   1      }
+  89          
+  90          void delay(uint m)
+  91          {
+  92   1          while (m--)
+  93   1              ;
+  94   1      }
+  95          
+  96          void timeInit(void)
+  97          {
+  98   1          TMOD = 0x01;
+  99   1          TH0 = (65536 - 50000) / 256; //50 ms
+ 100   1          TL0 = (65536 - 50000) % 256;
+ 101   1          ET0 = 1;
+ 102   1          TR0 = 1;
+ 103   1          EA = 1;
+ 104   1      }
+ 105          
+ 106          void timeIRQ(void) interrupt 1 using 0
+ 107          {
+ 108   1          removeFull();
+ 109   1          
+ 110   1          if (ctrlCounter == 2)
+ 111   1          {
+ 112   2              ctrlCounter = 0;
+ 113   2              if (alive == 1)
+ 114   2                  control();
+ 115   2          }
+ 116   1          else
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:14:48 PAGE 3   
+
+ 117   1              ctrlCounter++;
+ 118   1      }
+ 119          
+ 120          void control()
+ 121          {
+ 122   1          uchar _dx = dx;
+ 123   1          uchar _dy = dy;
+ 124   1          uchar status = MOVE;
+ 125   1      
+ 126   1          keyDetect();
+ 127   1      
+ 128   1          switch (key)
+ 129   1          {
+ 130   2          case 'U':
+ 131   2              index = getRotate();
+ 132   2              break;
+ 133   2          case 'D':
+ 134   2              _dy++;
+ 135   2              break;
+ 136   2          case 'L':
+ 137   2              _dx--;
+ 138   2              break;
+ 139   2          case 'R':
+ 140   2              _dx++;
+ 141   2              break;
+ 142   2          default:
+ 143   2              break;
+ 144   2          }
+ 145   1      
+ 146   1          if (fallCounter == 1)
+ 147   1          {
+ 148   2              fallCounter = 0;
+ 149   2              _dy++;
+ 150   2          }
+ 151   1          else
+ 152   1              fallCounter++;
+ 153   1      
+ 154   1          status = getStatus(index, _dx, _dy);
+ 155   1          switch (status)
+ 156   1          {
+ 157   2          case MOVE:
+ 158   2              dx = _dx;
+ 159   2              dy = _dy;
+ 160   2              break;
+ 161   2          case FIX:
+ 162   2              fixTerm(_dx, _dy);
+ 163   2              index = random;
+ 164   2              dx = 0;
+ 165   2              dy = 0;
+ 166   2              break;
+ 167   2          case OUT:
+ 168   2              break;
+ 169   2          default:
+ 170   2              break;
+ 171   2          }
+ 172   1      }
+ 173          
+ 174          void keyDetect(void)
+ 175          {
+ 176   1          if (U == 0)
+ 177   1              key = 'U';
+ 178   1          else if (D == 0)
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:14:48 PAGE 4   
+
+ 179   1              key = 'D';
+ 180   1          else if (L == 0)
+ 181   1              key = 'L';
+ 182   1          else if (R == 0)
+ 183   1              key = 'R';
+ 184   1          else
+ 185   1              key = 0;
+ 186   1      }
+ 187          
+ 188          void tetrisInit(void)
+ 189          {
+ 190   1          alive = 1;
+ 191   1          index = 0;
+ 192   1          dx = 0;
+ 193   1          dy = 0;
+ 194   1          clearGrid();
+ 195   1      }
+ 196          
+ 197          void clearGrid(void)
+ 198          {
+ 199   1          uchar i = 0;
+ 200   1          for (i = 0; i < 16; i++)
+ 201   1              grid[i] = 0xff;
+ 202   1      }
+ 203          
+ 204          uchar showRow(uchar num)
+ 205          {
+ 206   1          uchar i = 0, x = 0, y = 0, p = 0;
+ 207   1      
+ 208   1          if (num < 0 || num > 15)
+ 209   1              return 0;
+ 210   1          else
+ 211   1          {
+ 212   2              p = grid[num];
+ 213   2              if (num < 8)
+ 214   2              {
+ 215   3                  P3 = 0x01 << num;
+ 216   3                  P2 = 0x00;
+ 217   3              }
+ 218   2              else
+ 219   2              {
+ 220   3                  P2 = 0x01 << (num - 8);
+ 221   3                  P3 = 0x00;
+ 222   3              }
+ 223   2              for (i = 0; i < 4; i++)
+ 224   2              {
+ 225   3                  x = shape[index][i][0] + dx;
+ 226   3                  y = shape[index][i][1] + dy;
+ 227   3                  if (y == num)
+ 228   3                      p &= ~(0x80 >> x);
+ 229   3              }
+ 230   2              P1 = p;
+ 231   2              return 1;
+ 232   2          }
+ 233   1      }
+ 234          
+ 235          void display(void)
+ 236          {
+ 237   1          showRow(row);
+ 238   1      
+ 239   1          if (row == 15)
+ 240   1              row = 0;
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:14:48 PAGE 5   
+
+ 241   1          else
+ 242   1              row++;
+ 243   1      }
+ 244          
+ 245          uchar isOn(uchar x, uchar y)
+ 246          {
+ 247   1          if (x < 0 || x > 7 || y < 0 || y > 15)
+ 248   1              return 0;
+ 249   1          else
+ 250   1          {
+ 251   2              uchar r = 0x80 >> x;
+ 252   2              r &= grid[y];
+ 253   2              if (r)
+ 254   2                  return 0;
+ 255   2              else
+ 256   2                  return 1;
+ 257   2          }
+ 258   1      }
+ 259          
+ 260          uchar getStatus(uchar _index, uchar _dx, uchar _dy)
+ 261          {
+ 262   1          uchar i = 0, _x = 0, _y = 0;
+ 263   1          uchar status = MOVE;
+ 264   1      
+ 265   1          for (i = 0; i < 4; i++)
+ 266   1          {
+ 267   2              _x = shape[_index][i][0] + _dx;
+ 268   2              _y = shape[_index][i][1] + _dy + 1;
+ 269   2              if (_x < 0 || _x > 7 || _y < 0 || _y > 16)
+ 270   2              {
+ 271   3                  status = OUT;
+ 272   3                  break;
+ 273   3              }
+ 274   2              else if (_y == 16 || isOn(_x, _y))
+ 275   2              {
+ 276   3                  status = FIX;
+ 277   3                  break;
+ 278   3              }
+ 279   2          }
+ 280   1          return status;
+ 281   1      }
+ 282          
+ 283          uchar getRotate(void)
+ 284          {
+ 285   1          uchar _index = (index + 7) % 28;
+ 286   1      
+ 287   1          if (MOVE == getStatus(_index, dx, dy))
+ 288   1              return _index;
+ 289   1          else
+ 290   1              return index;
+ 291   1      }
+ 292          
+ 293          void fakeRandom(void)
+ 294          {
+ 295   1          uint num = rand();
+ 296   1          num *= (ctrlCounter + 1);
+ 297   1          num += random;
+ 298   1          num += index;
+ 299   1          num += key;
+ 300   1          random = num % 28;
+ 301   1      }
+ 302          
+C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:14:48 PAGE 6   
+
+ 303          void fixTerm(uchar _dx, uchar _dy)
+ 304          {
+ 305   1          uchar i = 0, x = 0, y = 0, p = 0;
+ 306   1          for (i = 0; i < 4; i++)
+ 307   1          {
+ 308   2              x = shape[index][i][0] + _dx;
+ 309   2              y = shape[index][i][1] + _dy;
+ 310   2              grid[y] &= ~(0x80 >> x);
+ 311   2          }
+ 312   1      }
+ 313          
+ 314          void removeFull(void)
+ 315          {
+ 316   1          uchar i = 15, j = 15;
+ 317   1      
+ 318   1          for (i = 15; i > 0; i--)  
+ 319   1              if (grid[i] != 0x00)
+ 320   1              {
+ 321   2                  if (j != i)
+ 322   2                      grid[j] = grid[i];
+ 323   2                  j--;
+ 324   2              }
+ 325   1      
+ 326   1          for (j; j > 0; j--)
+ 327   1              grid[j] = 0xff;
+ 328   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    934    ----
+   CONSTANT SIZE    =    224    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     25      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
