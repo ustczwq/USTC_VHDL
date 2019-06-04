@@ -51,7 +51,6 @@ void main()
 	while (1)
 	{
 		display();
-		keyDetect();
 		randomNum();
 	}
 }
@@ -59,7 +58,7 @@ void main()
 void timeIRQ(void) interrupt 1 using 0
 {
 	counter++;
-
+	keyDetect();
 	if (counter == 5)
 	{
 		counter = 0;

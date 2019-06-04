@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:12:19 PAGE 1   
+C51 COMPILER V9.59.0.0   MAIN                                                              06/04/2019 20:13:16 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
@@ -61,266 +61,265 @@ line level    source
   51   1              while (1)
   52   1              {
   53   2                      display();
-  54   2                      keyDetect();
-C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:12:19 PAGE 2   
+  54   2                      randomNum();
+C51 COMPILER V9.59.0.0   MAIN                                                              06/04/2019 20:13:16 PAGE 2   
 
-  55   2                      randomNum();
-  56   2              }
-  57   1      }
-  58          
-  59          void timeIRQ(void) interrupt 1 using 0
-  60          {
-  61   1              counter++;
-  62   1      
-  63   1              if (counter == 5)
-  64   1              {
-  65   2                      counter = 0;
-  66   2                      if (alive == 1)
-  67   2                              control();
-  68   2              }
-  69   1      }
-  70          
-  71          uchar control(void)
-  72          {
-  73   1              uchar x, y, status;
-  74   1              getPos(&x, &y, head);
-  75   1              switch (key)
-  76   1              {
-  77   2              case 'U':
-  78   2                      y--;
-  79   2                      break;
-  80   2              case 'D':
-  81   2                      y++;
-  82   2                      break;
-  83   2              case 'L':
-  84   2                      x--;
-  85   2                      break;
-  86   2              case 'R':
-  87   2                      x++;
-  88   2                      break;
-  89   2              default:
-  90   2                      break;
-  91   2              }
-  92   1      
-  93   1              status = getStatus(x, y);
-  94   1              switch (status)
-  95   1              {
-  96   2              case EAT:
-  97   2                      head = (head + 1) % LEN;
-  98   2                      setPos(x, y, head);
-  99   2                      food = randomFood();
- 100   2                      setPoint(food, ON);
- 101   2                      break;
- 102   2              case MOVE:
- 103   2                      head = (head + 1) % LEN;
- 104   2                      setPos(x, y, head);
- 105   2                      setPoint(snake[head], ON);
- 106   2                      setPoint(snake[tail], OFF);
- 107   2                      tail = (tail + 1) % LEN;
- 108   2                      break;
- 109   2              case CRASH:
- 110   2                      alive = 0;
- 111   2                      break;
- 112   2              default:
- 113   2                      break;
- 114   2              }
- 115   1      
- 116   1              return 0;
-C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:12:19 PAGE 3   
+  55   2              }
+  56   1      }
+  57          
+  58          void timeIRQ(void) interrupt 1 using 0
+  59          {
+  60   1              counter++;
+  61   1              keyDetect();
+  62   1              if (counter == 5)
+  63   1              {
+  64   2                      counter = 0;
+  65   2                      if (alive == 1)
+  66   2                              control();
+  67   2              }
+  68   1      }
+  69          
+  70          uchar control(void)
+  71          {
+  72   1              uchar x, y, status;
+  73   1              getPos(&x, &y, head);
+  74   1              switch (key)
+  75   1              {
+  76   2              case 'U':
+  77   2                      y--;
+  78   2                      break;
+  79   2              case 'D':
+  80   2                      y++;
+  81   2                      break;
+  82   2              case 'L':
+  83   2                      x--;
+  84   2                      break;
+  85   2              case 'R':
+  86   2                      x++;
+  87   2                      break;
+  88   2              default:
+  89   2                      break;
+  90   2              }
+  91   1      
+  92   1              status = getStatus(x, y);
+  93   1              switch (status)
+  94   1              {
+  95   2              case EAT:
+  96   2                      head = (head + 1) % LEN;
+  97   2                      setPos(x, y, head);
+  98   2                      food = randomFood();
+  99   2                      setPoint(food, ON);
+ 100   2                      break;
+ 101   2              case MOVE:
+ 102   2                      head = (head + 1) % LEN;
+ 103   2                      setPos(x, y, head);
+ 104   2                      setPoint(snake[head], ON);
+ 105   2                      setPoint(snake[tail], OFF);
+ 106   2                      tail = (tail + 1) % LEN;
+ 107   2                      break;
+ 108   2              case CRASH:
+ 109   2                      alive = 0;
+ 110   2                      break;
+ 111   2              default:
+ 112   2                      break;
+ 113   2              }
+ 114   1      
+ 115   1              return 0;
+ 116   1      }
+C51 COMPILER V9.59.0.0   MAIN                                                              06/04/2019 20:13:16 PAGE 3   
 
- 117   1      }
- 118          
- 119          uchar keyDetect(void)
- 120          {
- 121   1              if (U == 0)
- 122   1                      key = 'U';
- 123   1              else if (D == 0)
- 124   1                      key = 'D';
- 125   1              else if (L == 0)
- 126   1                      key = 'L';
- 127   1              else if (R == 0)
- 128   1                      key = 'R';
- 129   1              else
- 130   1                      return 0;
- 131   1      
- 132   1              return key;
- 133   1      }
- 134          
- 135          void timeInit(void)
- 136          {
- 137   1              TMOD = 0x01;
- 138   1              TH0 = (65536 - 50000) / 256; //50 ms
- 139   1              TL0 = (65536 - 50000) % 256;
- 140   1              ET0 = 1;
- 141   1              TR0 = 1;
- 142   1              EA = 1;
- 143   1      }
- 144          
- 145          void snakeInit(void)
- 146          {
- 147   1              int i = 0;
- 148   1              for (i = 0; i < 16; i++)
- 149   1                      grid[i] = 0xff;
- 150   1      
- 151   1              head = 1;
- 152   1              snake[1] = 0x13;
- 153   1              setPoint(snake[1], ON);
- 154   1      
- 155   1              tail = 0;
- 156   1              snake[0] = 0x03;
- 157   1              setPoint(snake[0], ON);
- 158   1      
- 159   1              food = 0x83;
- 160   1              setPoint(food, ON);
- 161   1      
- 162   1              key = 'R';
- 163   1              alive = 1;
- 164   1      }
- 165          
- 166          uchar setPoint(uchar pos, uchar off)
- 167          {
- 168   1              uchar x = pos >> 4;
- 169   1              uchar y = pos & 0x0f;
- 170   1      
- 171   1              if (x < 0 || x > 15 || y < 0 || y > 7)
- 172   1                      return 0;
- 173   1              else
- 174   1              {
- 175   2                      uchar col = 0x80 >> y;
- 176   2                      if (off)
- 177   2                              grid[x] |= col;
- 178   2                      else
-C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:12:19 PAGE 4   
+ 117          
+ 118          uchar keyDetect(void)
+ 119          {
+ 120   1              if (U == 0)
+ 121   1                      key = 'U';
+ 122   1              else if (D == 0)
+ 123   1                      key = 'D';
+ 124   1              else if (L == 0)
+ 125   1                      key = 'L';
+ 126   1              else if (R == 0)
+ 127   1                      key = 'R';
+ 128   1              else
+ 129   1                      return 0;
+ 130   1      
+ 131   1              return key;
+ 132   1      }
+ 133          
+ 134          void timeInit(void)
+ 135          {
+ 136   1              TMOD = 0x01;
+ 137   1              TH0 = (65536 - 50000) / 256; //50 ms
+ 138   1              TL0 = (65536 - 50000) % 256;
+ 139   1              ET0 = 1;
+ 140   1              TR0 = 1;
+ 141   1              EA = 1;
+ 142   1      }
+ 143          
+ 144          void snakeInit(void)
+ 145          {
+ 146   1              int i = 0;
+ 147   1              for (i = 0; i < 16; i++)
+ 148   1                      grid[i] = 0xff;
+ 149   1      
+ 150   1              head = 1;
+ 151   1              snake[1] = 0x13;
+ 152   1              setPoint(snake[1], ON);
+ 153   1      
+ 154   1              tail = 0;
+ 155   1              snake[0] = 0x03;
+ 156   1              setPoint(snake[0], ON);
+ 157   1      
+ 158   1              food = 0x83;
+ 159   1              setPoint(food, ON);
+ 160   1      
+ 161   1              key = 'R';
+ 162   1              alive = 1;
+ 163   1      }
+ 164          
+ 165          uchar setPoint(uchar pos, uchar off)
+ 166          {
+ 167   1              uchar x = pos >> 4;
+ 168   1              uchar y = pos & 0x0f;
+ 169   1      
+ 170   1              if (x < 0 || x > 15 || y < 0 || y > 7)
+ 171   1                      return 0;
+ 172   1              else
+ 173   1              {
+ 174   2                      uchar col = 0x80 >> y;
+ 175   2                      if (off)
+ 176   2                              grid[x] |= col;
+ 177   2                      else
+ 178   2                              grid[x] &= (0xff - col);
+C51 COMPILER V9.59.0.0   MAIN                                                              06/04/2019 20:13:16 PAGE 4   
 
- 179   2                              grid[x] &= (0xff - col);
- 180   2                      return 1;
- 181   2              }
- 182   1      }
- 183          
- 184          void display(void)
- 185          {
- 186   1              if (column == 15)
- 187   1                      column = 0;
- 188   1              else
- 189   1                      column++;
- 190   1      
- 191   1              showColumn(column);
- 192   1      }
- 193          
- 194          uchar showColumn(uchar col)
- 195          {
- 196   1              if (col >= 0 && col <= 7)
- 197   1              {
- 198   2                      P2 = 0x80 >> col;
- 199   2                      P3 = 0x00;
- 200   2                      P1 = grid[col];
- 201   2                      return 1;
- 202   2              }
- 203   1              else if (col >= 8 && col <= 15)
- 204   1              {
- 205   2                      P3 = 0x80 >> (col - 8);
- 206   2                      P2 = 0x00;
- 207   2                      P1 = grid[col];
- 208   2                      return 1;
- 209   2              }
- 210   1              else
- 211   1                      return 0;
- 212   1      }
- 213          
- 214          uchar getPos(uchar *x, uchar *y, uchar index)
- 215          {
- 216   1              if (index < 0 || index > 128)
- 217   1                      return 0;
- 218   1              else
- 219   1              {
- 220   2                      uchar pos = snake[index];
- 221   2                      *x = pos >> 4;
- 222   2                      *y = pos & 0x0f;
- 223   2                      return 1;
- 224   2              }
- 225   1      }
- 226          
- 227          uchar setPos(uchar x, uchar y, uchar index)
- 228          {
- 229   1              if (index < 0 || index > 128)
- 230   1                      return 0;
- 231   1              else
- 232   1              {
- 233   2                      snake[index] = x << 4;
- 234   2                      snake[index] += y;
- 235   2                      return 1;
- 236   2              }
- 237   1      }
- 238          
- 239          uchar getStatus(uchar x, uchar y)
- 240          {
-C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:12:19 PAGE 5   
+ 179   2                      return 1;
+ 180   2              }
+ 181   1      }
+ 182          
+ 183          void display(void)
+ 184          {
+ 185   1              if (column == 15)
+ 186   1                      column = 0;
+ 187   1              else
+ 188   1                      column++;
+ 189   1      
+ 190   1              showColumn(column);
+ 191   1      }
+ 192          
+ 193          uchar showColumn(uchar col)
+ 194          {
+ 195   1              if (col >= 0 && col <= 7)
+ 196   1              {
+ 197   2                      P2 = 0x80 >> col;
+ 198   2                      P3 = 0x00;
+ 199   2                      P1 = grid[col];
+ 200   2                      return 1;
+ 201   2              }
+ 202   1              else if (col >= 8 && col <= 15)
+ 203   1              {
+ 204   2                      P3 = 0x80 >> (col - 8);
+ 205   2                      P2 = 0x00;
+ 206   2                      P1 = grid[col];
+ 207   2                      return 1;
+ 208   2              }
+ 209   1              else
+ 210   1                      return 0;
+ 211   1      }
+ 212          
+ 213          uchar getPos(uchar *x, uchar *y, uchar index)
+ 214          {
+ 215   1              if (index < 0 || index > 128)
+ 216   1                      return 0;
+ 217   1              else
+ 218   1              {
+ 219   2                      uchar pos = snake[index];
+ 220   2                      *x = pos >> 4;
+ 221   2                      *y = pos & 0x0f;
+ 222   2                      return 1;
+ 223   2              }
+ 224   1      }
+ 225          
+ 226          uchar setPos(uchar x, uchar y, uchar index)
+ 227          {
+ 228   1              if (index < 0 || index > 128)
+ 229   1                      return 0;
+ 230   1              else
+ 231   1              {
+ 232   2                      snake[index] = x << 4;
+ 233   2                      snake[index] += y;
+ 234   2                      return 1;
+ 235   2              }
+ 236   1      }
+ 237          
+ 238          uchar getStatus(uchar x, uchar y)
+ 239          {
+ 240   1              if (x < 0 || x > 15 || y < 0 || y > 7)
+C51 COMPILER V9.59.0.0   MAIN                                                              06/04/2019 20:13:16 PAGE 5   
 
- 241   1              if (x < 0 || x > 15 || y < 0 || y > 7)
- 242   1                      return CRASH;
- 243   1              else if (isOn(x, y))
- 244   1              {
- 245   2                      if (isFood(x, y))
- 246   2                              return EAT;
- 247   2                      else
- 248   2                              return CRASH;
- 249   2              }
- 250   1              else
- 251   1                      return MOVE;
- 252   1      }
- 253          
- 254          uchar isOn(uchar x, uchar y)
- 255          {
- 256   1              if (x < 0 || x > 15 || y < 0 || y > 7)
- 257   1                      return 0;
- 258   1              else
- 259   1              {
- 260   2                      uchar col = 0x80 >> y;
- 261   2                      col &= grid[x];
- 262   2                      if (col)
- 263   2                              return 0;
- 264   2                      else
- 265   2                              return 1;
- 266   2              }
- 267   1      }
- 268          
- 269          uchar isFood(uchar x, uchar y)
- 270          {
- 271   1              if (x < 0 || x > 15 || y < 0 || y > 7)
- 272   1                      return 0;
- 273   1              else if (y == (food & 0x0f) && x == (food >> 4))
- 274   1                      return 1;
- 275   1              else
- 276   1                      return 0;
- 277   1      }
- 278          
- 279          uchar randomNum(void)
- 280          {
- 281   1              uint num = rand();
- 282   1              num *= head;
- 283   1              num += key;
- 284   1              random = num % 0xff;
- 285   1              return random;
- 286   1      }
- 287          
- 288          uchar randomFood(void)
- 289          {
- 290   1              uchar pos = random & 0xf7;
- 291   1              while (isOn(pos >> 4, pos & 0x0f))
- 292   1              {
- 293   2                      pos = (pos + random) % 0xff;
- 294   2                      pos &= 0xf7;
- 295   2              }
- 296   1      
- 297   1              return pos;
- 298   1      }
+ 241   1                      return CRASH;
+ 242   1              else if (isOn(x, y))
+ 243   1              {
+ 244   2                      if (isFood(x, y))
+ 245   2                              return EAT;
+ 246   2                      else
+ 247   2                              return CRASH;
+ 248   2              }
+ 249   1              else
+ 250   1                      return MOVE;
+ 251   1      }
+ 252          
+ 253          uchar isOn(uchar x, uchar y)
+ 254          {
+ 255   1              if (x < 0 || x > 15 || y < 0 || y > 7)
+ 256   1                      return 0;
+ 257   1              else
+ 258   1              {
+ 259   2                      uchar col = 0x80 >> y;
+ 260   2                      col &= grid[x];
+ 261   2                      if (col)
+ 262   2                              return 0;
+ 263   2                      else
+ 264   2                              return 1;
+ 265   2              }
+ 266   1      }
+ 267          
+ 268          uchar isFood(uchar x, uchar y)
+ 269          {
+ 270   1              if (x < 0 || x > 15 || y < 0 || y > 7)
+ 271   1                      return 0;
+ 272   1              else if (y == (food & 0x0f) && x == (food >> 4))
+ 273   1                      return 1;
+ 274   1              else
+ 275   1                      return 0;
+ 276   1      }
+ 277          
+ 278          uchar randomNum(void)
+ 279          {
+ 280   1              uint num = rand();
+ 281   1              num *= head;
+ 282   1              num += key;
+ 283   1              random = num % 0xff;
+ 284   1              return random;
+ 285   1      }
+ 286          
+ 287          uchar randomFood(void)
+ 288          {
+ 289   1              uchar pos = random & 0xf7;
+ 290   1              while (isOn(pos >> 4, pos & 0x0f))
+ 291   1              {
+ 292   2                      pos = (pos + random) % 0xff;
+ 293   2                      pos &= 0xf7;
+ 294   2              }
+ 295   1      
+ 296   1              return pos;
+ 297   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =    912    ----
-C51 COMPILER V9.59.0.0   MAIN                                                              06/03/2019 19:12:19 PAGE 6   
-
    CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.59.0.0   MAIN                                                              06/04/2019 20:13:16 PAGE 6   
+
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =    104      14

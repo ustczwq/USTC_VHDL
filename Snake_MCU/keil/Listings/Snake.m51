@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    06/03/2019  19:12:19  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    06/04/2019  20:13:17  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
@@ -48,18 +48,18 @@ LINK MAP OF MODULE:  .\Objects\Snake (?C_STARTUP)
             CODE    037FH     003EH     UNIT         ?PR?_ISFOOD?MAIN
             CODE    03BDH     0036H     UNIT         ?PR?SNAKEINIT?MAIN
             CODE    03F3H     0033H     UNIT         ?PR?_GETPOS?MAIN
-            CODE    0426H     002CH     UNIT         ?PR?RANDOMFOOD?MAIN
-            CODE    0452H     002BH     UNIT         ?PR?TIMEIRQ?MAIN
-            CODE    047DH     0026H     UNIT         ?PR?KEYDETECT?MAIN
-            CODE    04A3H     001BH     UNIT         ?PR?RANDOMNUM?MAIN
-            CODE    04BEH     0019H     UNIT         ?C_INITSEG
-            CODE    04D7H     0011H     UNIT         ?PR?MAIN?MAIN
-            CODE    04E8H     0011H     UNIT         ?PR?DISPLAY?MAIN
-            CODE    04F9H     0010H     UNIT         ?PR?TIMEINIT?MAIN
+            CODE    0426H     002EH     UNIT         ?PR?TIMEIRQ?MAIN
+            CODE    0454H     002CH     UNIT         ?PR?RANDOMFOOD?MAIN
+            CODE    0480H     0026H     UNIT         ?PR?KEYDETECT?MAIN
+            CODE    04A6H     001BH     UNIT         ?PR?RANDOMNUM?MAIN
+            CODE    04C1H     0019H     UNIT         ?C_INITSEG
+            CODE    04DAH     0011H     UNIT         ?PR?DISPLAY?MAIN
+            CODE    04EBH     0010H     UNIT         ?PR?TIMEINIT?MAIN
+            CODE    04FBH     000EH     UNIT         ?PR?MAIN?MAIN
 
 
 
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/03/2019  19:12:19  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/04/2019  20:13:17  PAGE 2
 
 
 OVERLAY MAP OF MODULE:   .\Objects\Snake (?C_STARTUP)
@@ -76,7 +76,6 @@ SEGMENT                          DATA_GROUP
   +--> ?PR?TIMEINIT?MAIN
   +--> ?PR?SNAKEINIT?MAIN
   +--> ?PR?DISPLAY?MAIN
-  +--> ?PR?KEYDETECT?MAIN
   +--> ?PR?RANDOMNUM?MAIN
 
 ?PR?SNAKEINIT?MAIN             -----    -----
@@ -93,6 +92,7 @@ SEGMENT                          DATA_GROUP
 *** NEW ROOT ***************************************************
 
 ?PR?TIMEIRQ?MAIN               -----    -----
+  +--> ?PR?KEYDETECT?MAIN
   +--> ?PR?CONTROL?MAIN
 
 ?PR?CONTROL?MAIN               0071H    0002H
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\Snake (?C_STARTUP)
 
   VALUE           TYPE          NAME
   ----------------------------------
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/03/2019  19:12:19  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/04/2019  20:13:17  PAGE 3
 
 
 
@@ -168,27 +168,27 @@ SYMBOL TABLE OF MODULE:  .\Objects\Snake (?C_STARTUP)
   D:0009H         PUBLIC        random
   C:009AH         PUBLIC        control
   B:00A8H.7       PUBLIC        EA
-  C:0426H         PUBLIC        randomFood
+  C:0454H         PUBLIC        randomFood
   D:000AH         PUBLIC        column
   D:000BH         PUBLIC        head
   D:000CH         PUBLIC        alive
   D:000DH         PUBLIC        snake
   C:02A4H         PUBLIC        _isOn
-  C:0452H         PUBLIC        timeIRQ
-  C:04D7H         PUBLIC        main
-  C:047DH         PUBLIC        keyDetect
+  C:0426H         PUBLIC        timeIRQ
+  C:04FBH         PUBLIC        main
+  C:0480H         PUBLIC        keyDetect
   D:005DH         PUBLIC        grid
   D:006DH         PUBLIC        food
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/03/2019  19:12:19  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/04/2019  20:13:17  PAGE 4
 
 
   C:03BDH         PUBLIC        snakeInit
   D:006EH         PUBLIC        tail
   D:0089H         PUBLIC        TMOD
   C:01F9H         PUBLIC        _showColumn
-  C:04A3H         PUBLIC        randomNum
+  C:04A6H         PUBLIC        randomNum
   B:0080H.3       PUBLIC        D
-  C:04F9H         PUBLIC        timeInit
+  C:04EBH         PUBLIC        timeInit
   B:00A8H.1       PUBLIC        ET0
   C:02EFH         PUBLIC        _getStatus
   D:006FH         PUBLIC        key
@@ -201,29 +201,29 @@ SYMBOL TABLE OF MODULE:  .\Objects\Snake (?C_STARTUP)
   C:019BH         PUBLIC        _setPoint
   C:037FH         PUBLIC        _isFood
   C:03F3H         PUBLIC        _getPos
-  C:04E8H         PUBLIC        display
+  C:04DAH         PUBLIC        display
   -------         PROC          MAIN
-  C:04D7H         LINE#         47
-  C:04D7H         LINE#         48
-  C:04D7H         LINE#         49
-  C:04DAH         LINE#         50
-  C:04DDH         LINE#         51
-  C:04DDH         LINE#         52
-  C:04DDH         LINE#         53
-  C:04E0H         LINE#         54
-  C:04E3H         LINE#         55
-  C:04E6H         LINE#         56
+  C:04FBH         LINE#         47
+  C:04FBH         LINE#         48
+  C:04FBH         LINE#         49
+  C:04FEH         LINE#         50
+  C:0501H         LINE#         51
+  C:0501H         LINE#         52
+  C:0501H         LINE#         53
+  C:0504H         LINE#         54
+  C:0507H         LINE#         55
   -------         ENDPROC       MAIN
   -------         PROC          TIMEIRQ
-  C:0452H         LINE#         59
-  C:045FH         LINE#         61
-  C:0461H         LINE#         63
-  C:0467H         LINE#         64
-  C:0467H         LINE#         65
-  C:0469H         LINE#         66
-  C:046FH         LINE#         67
-  C:0472H         LINE#         68
-  C:0472H         LINE#         69
+  C:0426H         LINE#         58
+  C:0433H         LINE#         60
+  C:0435H         LINE#         61
+  C:0438H         LINE#         62
+  C:043EH         LINE#         63
+  C:043EH         LINE#         64
+  C:0440H         LINE#         65
+  C:0446H         LINE#         66
+  C:0449H         LINE#         67
+  C:0449H         LINE#         68
   -------         ENDPROC       TIMEIRQ
   -------         PROC          CONTROL
   -------         DO            
@@ -231,103 +231,103 @@ SYMBOL TABLE OF MODULE:  .\Objects\Snake (?C_STARTUP)
   D:0072H         SYMBOL        y
   D:0007H         SYMBOL        status
   -------         ENDDO         
+  C:009AH         LINE#         70
   C:009AH         LINE#         71
-  C:009AH         LINE#         72
-  C:009AH         LINE#         74
-  C:00AFH         LINE#         75
+  C:009AH         LINE#         73
+  C:00AFH         LINE#         74
+  C:00C1H         LINE#         75
   C:00C1H         LINE#         76
   C:00C1H         LINE#         77
-  C:00C1H         LINE#         78
-  C:00C3H         LINE#         79
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/03/2019  19:12:19  PAGE 5
+  C:00C3H         LINE#         78
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/04/2019  20:13:17  PAGE 5
 
 
+  C:00C5H         LINE#         79
   C:00C5H         LINE#         80
-  C:00C5H         LINE#         81
-  C:00C7H         LINE#         82
+  C:00C7H         LINE#         81
+  C:00C9H         LINE#         82
   C:00C9H         LINE#         83
-  C:00C9H         LINE#         84
-  C:00CBH         LINE#         85
+  C:00CBH         LINE#         84
+  C:00CDH         LINE#         85
   C:00CDH         LINE#         86
-  C:00CDH         LINE#         87
+  C:00CFH         LINE#         87
   C:00CFH         LINE#         88
   C:00CFH         LINE#         89
   C:00CFH         LINE#         90
-  C:00CFH         LINE#         91
-  C:00CFH         LINE#         93
-  C:00D6H         LINE#         94
+  C:00CFH         LINE#         92
+  C:00D6H         LINE#         93
+  C:00DFH         LINE#         94
   C:00DFH         LINE#         95
   C:00DFH         LINE#         96
   C:00DFH         LINE#         97
-  C:00DFH         LINE#         98
-  C:00E2H         LINE#         99
-  C:00E7H         LINE#         100
-  C:00ECH         LINE#         101
+  C:00E2H         LINE#         98
+  C:00E7H         LINE#         99
+  C:00ECH         LINE#         100
+  C:00EEH         LINE#         101
   C:00EEH         LINE#         102
   C:00EEH         LINE#         103
-  C:00EEH         LINE#         104
-  C:00F1H         LINE#         105
-  C:00FDH         LINE#         106
-  C:0109H         LINE#         107
-  C:011AH         LINE#         108
+  C:00F1H         LINE#         104
+  C:00FDH         LINE#         105
+  C:0109H         LINE#         106
+  C:011AH         LINE#         107
+  C:011CH         LINE#         108
   C:011CH         LINE#         109
-  C:011CH         LINE#         110
+  C:011FH         LINE#         110
   C:011FH         LINE#         111
   C:011FH         LINE#         112
   C:011FH         LINE#         113
-  C:011FH         LINE#         114
-  C:011FH         LINE#         116
-  C:0121H         LINE#         117
+  C:011FH         LINE#         115
+  C:0121H         LINE#         116
   -------         ENDPROC       CONTROL
   -------         PROC          KEYDETECT
-  C:047DH         LINE#         119
-  C:047DH         LINE#         120
-  C:047DH         LINE#         121
-  C:0480H         LINE#         122
-  C:0485H         LINE#         123
-  C:0488H         LINE#         124
-  C:048DH         LINE#         125
-  C:0490H         LINE#         126
-  C:0495H         LINE#         127
-  C:0498H         LINE#         128
-  C:049DH         LINE#         130
-  C:04A0H         LINE#         132
-  C:04A2H         LINE#         133
+  C:0480H         LINE#         118
+  C:0480H         LINE#         119
+  C:0480H         LINE#         120
+  C:0483H         LINE#         121
+  C:0488H         LINE#         122
+  C:048BH         LINE#         123
+  C:0490H         LINE#         124
+  C:0493H         LINE#         125
+  C:0498H         LINE#         126
+  C:049BH         LINE#         127
+  C:04A0H         LINE#         129
+  C:04A3H         LINE#         131
+  C:04A5H         LINE#         132
   -------         ENDPROC       KEYDETECT
   -------         PROC          TIMEINIT
-  C:04F9H         LINE#         135
-  C:04F9H         LINE#         136
-  C:04F9H         LINE#         137
-  C:04FCH         LINE#         138
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/03/2019  19:12:19  PAGE 6
+  C:04EBH         LINE#         134
+  C:04EBH         LINE#         135
+  C:04EBH         LINE#         136
+  C:04EEH         LINE#         137
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/04/2019  20:13:17  PAGE 6
 
 
-  C:04FFH         LINE#         139
-  C:0502H         LINE#         140
-  C:0504H         LINE#         141
-  C:0506H         LINE#         142
-  C:0508H         LINE#         143
+  C:04F1H         LINE#         138
+  C:04F4H         LINE#         139
+  C:04F6H         LINE#         140
+  C:04F8H         LINE#         141
+  C:04FAH         LINE#         142
   -------         ENDPROC       TIMEINIT
   -------         PROC          SNAKEINIT
   -------         DO            
   D:0006H         SYMBOL        i
   -------         ENDDO         
+  C:03BDH         LINE#         144
   C:03BDH         LINE#         145
   C:03BDH         LINE#         146
-  C:03BDH         LINE#         147
+  C:03BFH         LINE#         147
   C:03BFH         LINE#         148
-  C:03BFH         LINE#         149
-  C:03C9H         LINE#         151
-  C:03CCH         LINE#         152
-  C:03CFH         LINE#         153
-  C:03D6H         LINE#         155
-  C:03D9H         LINE#         156
-  C:03DCH         LINE#         157
-  C:03E2H         LINE#         159
-  C:03E5H         LINE#         160
-  C:03ECH         LINE#         162
-  C:03EFH         LINE#         163
-  C:03F2H         LINE#         164
+  C:03C9H         LINE#         150
+  C:03CCH         LINE#         151
+  C:03CFH         LINE#         152
+  C:03D6H         LINE#         154
+  C:03D9H         LINE#         155
+  C:03DCH         LINE#         156
+  C:03E2H         LINE#         158
+  C:03E5H         LINE#         159
+  C:03ECH         LINE#         161
+  C:03EFH         LINE#         162
+  C:03F2H         LINE#         163
   -------         ENDPROC       SNAKEINIT
   -------         PROC          _SETPOINT
   D:0007H         SYMBOL        pos
@@ -339,52 +339,52 @@ SYMBOL TABLE OF MODULE:  .\Objects\Snake (?C_STARTUP)
   D:0073H         SYMBOL        col
   -------         ENDDO         
   -------         ENDDO         
+  C:019BH         LINE#         165
   C:019BH         LINE#         166
   C:019BH         LINE#         167
-  C:019BH         LINE#         168
-  C:01A0H         LINE#         169
-  C:01A4H         LINE#         171
-  C:01CCH         LINE#         172
+  C:01A0H         LINE#         168
+  C:01A4H         LINE#         170
+  C:01CCH         LINE#         171
+  C:01CFH         LINE#         173
   C:01CFH         LINE#         174
-  C:01CFH         LINE#         175
-  C:01DCH         LINE#         176
-  C:01DFH         LINE#         177
-  C:01E9H         LINE#         179
-  C:01F6H         LINE#         180
+  C:01DCH         LINE#         175
+  C:01DFH         LINE#         176
+  C:01E9H         LINE#         178
+  C:01F6H         LINE#         179
+  C:01F8H         LINE#         180
   C:01F8H         LINE#         181
-  C:01F8H         LINE#         182
   -------         ENDPROC       _SETPOINT
   -------         PROC          DISPLAY
-  C:04E8H         LINE#         184
-  C:04E8H         LINE#         185
-  C:04E8H         LINE#         186
-  C:04EEH         LINE#         187
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/03/2019  19:12:19  PAGE 7
+  C:04DAH         LINE#         183
+  C:04DAH         LINE#         184
+  C:04DAH         LINE#         185
+  C:04E0H         LINE#         186
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/04/2019  20:13:17  PAGE 7
 
 
-  C:04F2H         LINE#         189
-  C:04F4H         LINE#         191
+  C:04E4H         LINE#         188
+  C:04E6H         LINE#         190
   -------         ENDPROC       DISPLAY
   -------         PROC          _SHOWCOLUMN
   D:0007H         SYMBOL        col
+  C:01F9H         LINE#         193
   C:01F9H         LINE#         194
   C:01F9H         LINE#         195
-  C:01F9H         LINE#         196
+  C:020EH         LINE#         196
   C:020EH         LINE#         197
-  C:020EH         LINE#         198
-  C:021BH         LINE#         199
+  C:021BH         LINE#         198
+  C:021EH         LINE#         199
   C:021EH         LINE#         200
-  C:021EH         LINE#         201
+  C:0220H         LINE#         201
   C:0220H         LINE#         202
-  C:0220H         LINE#         203
+  C:0237H         LINE#         203
   C:0237H         LINE#         204
-  C:0237H         LINE#         205
-  C:0247H         LINE#         206
-  C:024AH         LINE#         207
-  C:0251H         LINE#         208
-  C:0254H         LINE#         209
-  C:0254H         LINE#         211
-  C:0256H         LINE#         212
+  C:0247H         LINE#         205
+  C:024AH         LINE#         206
+  C:0251H         LINE#         207
+  C:0254H         LINE#         208
+  C:0254H         LINE#         210
+  C:0256H         LINE#         211
   -------         ENDPROC       _SHOWCOLUMN
   -------         PROC          _GETPOS
   D:0001H         SYMBOL        x
@@ -393,17 +393,17 @@ SYMBOL TABLE OF MODULE:  .\Objects\Snake (?C_STARTUP)
   -------         DO            
   D:007AH         SYMBOL        pos
   -------         ENDDO         
+  C:03F3H         LINE#         213
   C:03F3H         LINE#         214
   C:03F3H         LINE#         215
-  C:03F3H         LINE#         216
-  C:0405H         LINE#         217
+  C:0405H         LINE#         216
+  C:0408H         LINE#         218
   C:0408H         LINE#         219
-  C:0408H         LINE#         220
-  C:0410H         LINE#         221
-  C:0416H         LINE#         222
-  C:0423H         LINE#         223
+  C:0410H         LINE#         220
+  C:0416H         LINE#         221
+  C:0423H         LINE#         222
+  C:0425H         LINE#         223
   C:0425H         LINE#         224
-  C:0425H         LINE#         225
   -------         ENDPROC       _GETPOS
   -------         PROC          L?0089
   -------         ENDPROC       L?0089
@@ -411,35 +411,35 @@ SYMBOL TABLE OF MODULE:  .\Objects\Snake (?C_STARTUP)
   D:0007H         SYMBOL        x
   D:0005H         SYMBOL        y
   D:0003H         SYMBOL        index
+  C:034FH         LINE#         226
   C:034FH         LINE#         227
   C:034FH         LINE#         228
-  C:034FH         LINE#         229
-  C:0367H         LINE#         230
+  C:0367H         LINE#         229
+  C:036AH         LINE#         231
   C:036AH         LINE#         232
-  C:036AH         LINE#         233
-  C:0375H         LINE#         234
-  C:037CH         LINE#         235
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/03/2019  19:12:19  PAGE 8
+  C:0375H         LINE#         233
+  C:037CH         LINE#         234
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/04/2019  20:13:17  PAGE 8
 
 
+  C:037EH         LINE#         235
   C:037EH         LINE#         236
-  C:037EH         LINE#         237
   -------         ENDPROC       _SETPOS
   -------         PROC          _GETSTATUS
   D:0073H         SYMBOL        x
   D:0074H         SYMBOL        y
-  C:02EFH         LINE#         239
+  C:02EFH         LINE#         238
+  C:02F3H         LINE#         239
   C:02F3H         LINE#         240
-  C:02F3H         LINE#         241
-  C:0318H         LINE#         242
-  C:031BH         LINE#         243
+  C:0318H         LINE#         241
+  C:031BH         LINE#         242
+  C:0325H         LINE#         243
   C:0325H         LINE#         244
-  C:0325H         LINE#         245
-  C:032FH         LINE#         246
-  C:0332H         LINE#         248
-  C:0335H         LINE#         249
-  C:0335H         LINE#         251
-  C:0337H         LINE#         252
+  C:032FH         LINE#         245
+  C:0332H         LINE#         247
+  C:0335H         LINE#         248
+  C:0335H         LINE#         250
+  C:0337H         LINE#         251
   -------         ENDPROC       _GETSTATUS
   -------         PROC          _ISON
   D:0007H         SYMBOL        x
@@ -447,61 +447,61 @@ SYMBOL TABLE OF MODULE:  .\Objects\Snake (?C_STARTUP)
   -------         DO            
   D:0075H         SYMBOL        col
   -------         ENDDO         
+  C:02A4H         LINE#         253
   C:02A4H         LINE#         254
   C:02A4H         LINE#         255
-  C:02A4H         LINE#         256
-  C:02CCH         LINE#         257
+  C:02CCH         LINE#         256
+  C:02CFH         LINE#         258
   C:02CFH         LINE#         259
-  C:02CFH         LINE#         260
-  C:02DEH         LINE#         261
-  C:02E5H         LINE#         262
-  C:02E9H         LINE#         263
-  C:02ECH         LINE#         265
+  C:02DEH         LINE#         260
+  C:02E5H         LINE#         261
+  C:02E9H         LINE#         262
+  C:02ECH         LINE#         264
+  C:02EEH         LINE#         265
   C:02EEH         LINE#         266
-  C:02EEH         LINE#         267
   -------         ENDPROC       _ISON
   -------         PROC          _ISFOOD
   D:0007H         SYMBOL        x
   D:0005H         SYMBOL        y
+  C:037FH         LINE#         268
   C:037FH         LINE#         269
   C:037FH         LINE#         270
-  C:037FH         LINE#         271
-  C:03A5H         LINE#         272
-  C:03A8H         LINE#         273
-  C:03B7H         LINE#         274
-  C:03BAH         LINE#         276
-  C:03BCH         LINE#         277
+  C:03A5H         LINE#         271
+  C:03A8H         LINE#         272
+  C:03B7H         LINE#         273
+  C:03BAH         LINE#         275
+  C:03BCH         LINE#         276
   -------         ENDPROC       _ISFOOD
   -------         PROC          RANDOMNUM
   -------         DO            
   D:0006H         SYMBOL        num
   -------         ENDDO         
-  C:04A3H         LINE#         279
-  C:04A3H         LINE#         280
-  C:04A3H         LINE#         281
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/03/2019  19:12:19  PAGE 9
+  C:04A6H         LINE#         278
+  C:04A6H         LINE#         279
+  C:04A6H         LINE#         280
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/04/2019  20:13:17  PAGE 9
 
 
-  C:04A6H         LINE#         282
-  C:04ADH         LINE#         283
-  C:04B4H         LINE#         284
-  C:04BBH         LINE#         285
-  C:04BDH         LINE#         286
+  C:04A9H         LINE#         281
+  C:04B0H         LINE#         282
+  C:04B7H         LINE#         283
+  C:04BEH         LINE#         284
+  C:04C0H         LINE#         285
   -------         ENDPROC       RANDOMNUM
   -------         PROC          RANDOMFOOD
   -------         DO            
   D:0004H         SYMBOL        pos
   -------         ENDDO         
-  C:0426H         LINE#         288
-  C:0426H         LINE#         289
-  C:0426H         LINE#         290
-  C:042BH         LINE#         291
-  C:043AH         LINE#         292
-  C:043AH         LINE#         293
-  C:044AH         LINE#         294
-  C:044DH         LINE#         295
-  C:044FH         LINE#         297
-  C:0451H         LINE#         298
+  C:0454H         LINE#         287
+  C:0454H         LINE#         288
+  C:0454H         LINE#         289
+  C:0459H         LINE#         290
+  C:0468H         LINE#         291
+  C:0468H         LINE#         292
+  C:0478H         LINE#         293
+  C:047BH         LINE#         294
+  C:047DH         LINE#         296
+  C:047FH         LINE#         297
   -------         ENDPROC       RANDOMFOOD
   -------         ENDMOD        MAIN
 
