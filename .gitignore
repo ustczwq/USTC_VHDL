@@ -64,3 +64,4 @@
 */testbench/
 */output_files
 */*_sim/
+*.pdf
