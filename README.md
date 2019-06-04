@@ -38,7 +38,7 @@ USTC 电子系统设计实验
 
 ![](./Reports/8051/tetris.gif)
 
-![](./Reports/8051/tetris.gif)
+![](./Reports/8051/snake.gif)
 
 
 
