@@ -210,7 +210,7 @@
 
 ## 五、硬件验证
 
-完整动图效果可参见 GitHub [俄罗斯方块演示](https://github.com/ustczwq/USTC_VHDL/blob/alpha/Reports/design/tetris.gif) 和 [贪吃蛇演示](https://github.com/ustczwq/USTC_VHDL/blob/alpha/Reports/design/snake.gif)
+>  完整动图效果可参见 GitHub [俄罗斯方块演示](https://github.com/ustczwq/USTC_VHDL/blob/alpha/Reports/design/tetris.gif) 和 [贪吃蛇演示](https://github.com/ustczwq/USTC_VHDL/blob/alpha/Reports/design/snake.gif)
 
 ### 1. 俄罗斯方块
 
